@@ -1,0 +1,15 @@
+[project]
+name = "aiobs"
+version = "0.1.0"
+description = "Small shared observability kit for the portfolio projects: event log, timers, token counts, resource sampling, JSON/Markdown reports"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["psutil>=5.9"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aiobs"]
