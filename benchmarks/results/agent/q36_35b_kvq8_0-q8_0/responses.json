@@ -1,0 +1,389 @@
+[
+ {
+  "id": "t01_pagination_off_by_one",
+  "category": "bugfix",
+  "latency_s": 8.03,
+  "usage": {
+   "completion_tokens": 98,
+   "prompt_tokens": 220,
+   "total_tokens": 318,
+   "prompt_tokens_details": {
+    "cached_tokens": 0
+   }
+  },
+  "files": [
+   "pager.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: pager.py\n```python\ndef paginate(items, page, per_page):\n    \"\"\"Return the items on `page` (1-based) with `per_page` items per page.\"\"\"\n    start = (page - 1) * per_page\n    end = start + per_page\n    return items[start:end]\n\n\ndef page_count(n_items, per_page):\n    return (n_items + per_page - 1) // per_page\n```",
+  "pass": true
+ },
+ {
+  "id": "t02_mutable_default",
+  "category": "bugfix",
+  "latency_s": 4.27,
+  "usage": {
+   "completion_tokens": 53,
+   "prompt_tokens": 173,
+   "total_tokens": 226,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "tags.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: tags.py\n```python\ndef add_tag(item, tag, tags=None):\n    if tags is None:\n        tags = []\n    tags.append(tag)\n    return {\"item\": item, \"tags\": tags}\n```",
+  "pass": true
+ },
+ {
+  "id": "t03_traceback_fix",
+  "category": "bugfix",
+  "latency_s": 9.13,
+  "usage": {
+   "completion_tokens": 129,
+   "prompt_tokens": 334,
+   "total_tokens": 463,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "config.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: config.py\n```python\nDEFAULTS = {\"port\": 8080, \"timeout\": 30, \"debug\": False}\n\ndef load_config(raw):\n    if \"host\" not in raw:\n        raise ValueError(\"host is required\")\n    \n    return {\n        \"host\": raw[\"host\"],\n        \"timeout\": int(raw.get(\"timeout\", DEFAULTS[\"timeout\"])),\n        \"port\": int(raw.get(\"port\", DEFAULTS[\"port\"])),\n        \"debug\": bool(raw.get(\"debug\", DEFAULTS[\"debug\"])),\n    }\n```",
+  "pass": true
+ },
+ {
+  "id": "t04_inheritance_init",
+  "category": "bugfix",
+  "latency_s": 9.05,
+  "usage": {
+   "completion_tokens": 131,
+   "prompt_tokens": 248,
+   "total_tokens": 379,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "users.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: users.py\n```python\nclass User:\n    def __init__(self, name, email):\n        self.name = name\n        self.email = email.lower()\n\n    def describe(self):\n        return f\"{self.name} <{self.email}>\"\n\n\nclass AdminUser(User):\n    def __init__(self, name, email, perms):\n        super().__init__(name, email)\n        self.perms = set(perms)\n\n    def describe(self):\n        return super().describe() + f\" [admin: {', '.join(sorted(self.perms))}]\"\n```",
+  "pass": true
+ },
+ {
+  "id": "t05_timezone_bug",
+  "category": "bugfix",
+  "latency_s": 65.56,
+  "usage": {
+   "completion_tokens": 1133,
+   "prompt_tokens": 236,
+   "total_tokens": 1369,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "timeutil.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: timeutil.py\n```python\nfrom datetime import datetime, timezone, timedelta\nimport re\n\ndef hours_between(a, b):\n    \"\"\"\n    Calculate the absolute difference in hours between two ISO-8601 timestamp strings.\n    \n    Handles different UTC offsets and the 'Z' suffix.\n    Returns the absolute difference in hours as a float.\n    \"\"\"\n    def parse_iso_timestamp(ts):\n        # Handle 'Z' suffix by replacing with '+00:00'\n        ts = ts.strip()\n        if ts.endswith('Z'):\n            ts = ts[:-1] + '+00:00'\n        \n        # Try parsing with timezone info\n        # Python 3.7+ supports %z with colon in some versions, but let's be safe\n        # We'll use a more robust approach by splitting manually if needed\n        \n        # Check if there's a timezone offset at the end\n        # Format: YYYY-MM-DDTHH:MM:SS[.ffffff][+HH:MM|-HH:MM|Z]\n        \n        # Find the timezone part\n        # Look for + or - after the time part\n        # The date-time part is up to the first + or - that is not part of the date\n        \n        # Simple approach: try fromisoformat if available (Python 3.7+)\n        try:\n            # Python 3.7+ datetime.fromisoformat handles most ISO 8601 formats\n            # but 'Z' was not supported until Python 3.11\n            # We already replaced Z with +00:00\n            dt = datetime.fromisoformat(ts)\n            # Ensure it's timezone-aware\n            if dt.tzinfo is None:\n                dt = dt.replace(tzinfo=timezone.utc)\n            return dt\n        except (ValueError, AttributeError):\n            pass\n        \n        # Fallback: manual parsing\n        # Extract the main datetime part and the offset\n        # Pattern: YYYY-MM-DDTHH:MM:SS[.ffffff] followed by optional offset\n        \n        # Find where the offset starts\n        # It's the last + or - that appears after the time part\n        time_part_end = ts.find('T')\n        if time_part_end == -1:\n            raise ValueError(f\"Invalid timestamp format: {ts}\")\n        \n        # Look for offset after the time part\n        # The offset is at the end of the string\n        # Find the last occurrence of + or - after the date part\n        date_time_str = ts[:time_part_end + 1]\n        rest = ts[time_part_end + 1:]\n        \n        # Find the offset sign\n        offset_sign = None\n        offset_pos = -1\n        for i, c in enumerate(rest):\n            if c in ('+', '-') and i > 0:  # Skip if it's the first char (unlikely for offset)\n                # Check if this looks like an offset (followed by digits)\n                if i + 1 < len(rest) and rest[i+1].isdigit():\n                    offset_sign = c\n                    offset_pos = time_part_end + 1 + i\n                    break\n        \n        if offset_sign is not None:\n            dt_str = ts[:offset_pos]\n            offset_str = ts[offset_pos:]\n        else:\n            dt_str = ts\n            offset_str = '+00:00'\n        \n        # Parse the datetime part\n        # Remove any fractional seconds for simpler parsing\n        if '.' in dt_str:\n            dt_str, frac = dt_str.split('.', 1)\n            # Truncate or pad fractional seconds to 6 digits\n            frac = frac[:6].ljust(6, '0')\n            dt_str = dt_str + '.' + frac\n        \n        # Parse the datetime string\n        try:\n            dt = datetime.strptime(dt_str, \"%Y-%m-%dT%H:%M:%S.%f\")\n        except ValueError:\n            try:\n                dt = datetime.strptime(dt_str, \"%Y-%m-%dT%H:%M:%S\")\n            except ValueError:\n                raise ValueError(f\"Cannot parse datetime part: {dt_str}\")\n        \n        # Parse the offset\n        # Format: +HH:MM or -HH:MM\n        sign = 1 if offset_str[0] == '+' else -1\n        offset_parts = offset_str[1:].split(':')\n        if len(offset_parts) == 2:\n            hours_offset = int(offset_parts[0])\n            minutes_offset = int(offset_parts[1])\n        elif len(offset_parts) == 1:\n            hours_offset = int(offset_parts[0])\n            minutes_offset = 0\n        else:\n            raise ValueError(f\"Invalid offset format: {offset_str}\")\n        \n        tz = timezone(timedelta(hours=sign * hours_offset, minutes=sign * minutes_offset))\n        dt = dt.replace(tzinfo=tz)\n        \n        return dt\n    \n    dt_a = parse_iso_timestamp(a)\n    dt_b = parse_iso_timestamp(b)\n    \n    # Calculate the difference in seconds\n    diff = abs((dt_b - dt_a).total_seconds())\n    \n    # Convert to hours\n    return diff / 3600.0\n```",
+  "pass": true
+ },
+ {
+  "id": "t06_sql_injection",
+  "category": "bugfix",
+  "latency_s": 9.55,
+  "usage": {
+   "completion_tokens": 135,
+   "prompt_tokens": 275,
+   "total_tokens": 410,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "db.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: db.py\n```python\nimport sqlite3\n\ndef make_db():\n    con = sqlite3.connect(\":memory:\")\n    con.execute(\"CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)\")\n    con.executemany(\"INSERT INTO users (name) VALUES (?)\", [(\"alice\",), (\"O'Brien\",), (\"bob\",)])\n    return con\n\ndef find_user(con, name):\n    rows = con.execute(\"SELECT id, name FROM users WHERE name = ?\", (name,)).fetchall()\n    return [{\"id\": r[0], \"name\": r[1]} for r in rows]\n```",
+  "pass": true
+ },
+ {
+  "id": "t07_async_gather",
+  "category": "bugfix",
+  "latency_s": 6.12,
+  "usage": {
+   "completion_tokens": 80,
+   "prompt_tokens": 214,
+   "total_tokens": 294,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "fetcher.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: fetcher.py\n```python\nimport asyncio\n\nasync def fetch(url, delay=0.2):\n    await asyncio.sleep(delay)\n    return f\"<{url}>\"\n\nasync def fetch_all(urls):\n    tasks = [fetch(u) for u in urls]\n    results = await asyncio.gather(*tasks)\n    return list(results)\n```",
+  "pass": true
+ },
+ {
+  "id": "t08_merge_intervals",
+  "category": "implement",
+  "latency_s": 15.58,
+  "usage": {
+   "completion_tokens": 246,
+   "prompt_tokens": 212,
+   "total_tokens": 458,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "intervals.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: intervals.py\n```python\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching closed intervals.\n\n    intervals: list of (start, end) tuples with start <= end, in any order.\n    Returns a sorted list of merged (start, end) tuples.\n    Touching intervals like (1, 2) and (2, 3) merge into (1, 3).\n    \"\"\"\n    if not intervals:\n        return []\n\n    # Sort intervals by start time\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n\n    merged = [sorted_intervals[0]]\n\n    for current in sorted_intervals[1:]:\n        last = merged[-1]\n        # If the current interval overlaps or touches the last merged interval\n        if current[0] <= last[1]:\n            # Merge them by extending the end of the last interval\n            merged[-1] = (last[0], max(last[1], current[1]))\n        else:\n            # No overlap, add the current interval as a new interval\n            merged.append(current)\n\n    return merged\n```",
+  "pass": true
+ },
+ {
+  "id": "t09_lru_cache",
+  "category": "implement",
+  "latency_s": 14.97,
+  "usage": {
+   "completion_tokens": 233,
+   "prompt_tokens": 221,
+   "total_tokens": 454,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "lru.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: lru.py\n```python\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = {}  # key -> value\n        self.order = []  # list to track usage order (most recent at end)\n\n    def get(self, key):\n        if key in self.cache:\n            # Move key to end to mark as recently used\n            self.order.remove(key)\n            self.order.append(key)\n            return self.cache[key]\n        return -1\n\n    def put(self, key, value):\n        if key in self.cache:\n            # Update value and move to end\n            self.cache[key] = value\n            self.order.remove(key)\n            self.order.append(key)\n        else:\n            if len(self.cache) >= self.capacity:\n                # Evict least recently used (first in order)\n                lru_key = self.order.pop(0)\n                del self.cache[lru_key]\n            self.cache[key] = value\n            self.order.append(key)\n```",
+  "pass": true
+ },
+ {
+  "id": "t10_log_parser",
+  "category": "implement",
+  "latency_s": 30.96,
+  "usage": {
+   "completion_tokens": 516,
+   "prompt_tokens": 227,
+   "total_tokens": 743,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "logparse.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: logparse.py\n```python\nimport re\n\ndef parse_line(line):\n    \"\"\"\n    Parse an access-log line into a dictionary.\n    \n    Expected format:\n    2026-10-04 17:02:11 INFO [api] GET /v1/users 200 13.5ms\n    \n    Returns a dict with keys: date, time, level, component, method, path, status, latency_ms\n    Returns None if the line doesn't match the format.\n    \"\"\"\n    if not line or not isinstance(line, str):\n        return None\n    \n    # Pattern explanation:\n    # (\\d{4}-\\d{2}-\\d{2}) - date (YYYY-MM-DD)\n    # (\\d{2}:\\d{2}:\\d{2}) - time (HH:MM:SS)\n    # (\\w+) - level (e.g., INFO, ERROR, DEBUG)\n    # \\[(\\w+)\\] - component in brackets (e.g., [api])\n    # (\\w+) - HTTP method (e.g., GET, POST)\n    # (\\S+) - path (non-whitespace)\n    # (\\d{3}) - status code (3 digits)\n    # (\\d+(?:\\.\\d+)?)ms - latency in ms (integer or decimal followed by 'ms')\n    \n    pattern = r'^(\\d{4}-\\d{2}-\\d{2})\\s+(\\d{2}:\\d{2}:\\d{2})\\s+(\\w+)\\s+\\[(\\w+)\\]\\s+(\\w+)\\s+(\\S+)\\s+(\\d{3})\\s+(\\d+(?:\\.\\d+)?)ms$'\n    \n    match = re.match(pattern, line.strip())\n    \n    if not match:\n        return None\n    \n    date, time, level, component, method, path, status, latency_ms = match.groups()\n    \n    try:\n        return {\n            'date': date,\n            'time': time,\n            'level': level,\n            'component': component,\n            'method': method,\n            'path': path,\n            'status': int(status),\n            'latency_ms': float(latency_ms)\n        }\n    except (ValueError, TypeError):\n        return None\n```",
+  "pass": false,
+  "tail": "__\n\n    def test_int_latency():\n        r = parse_line(\"2026-01-01 00:00:00 WARN [db-pool] POST /x?y=1 503 120ms\")\n>       assert r[\"component\"] == \"db-pool\" and r[\"status\"] == 503 and r[\"latency_ms\"] == 120.0\n               ^^^^^^^^^^^^^^\nE       TypeError: 'NoneType' object is not subscriptable\n\ntest_logparse.py:8: TypeError\n=========================== short test summary info ============================\nFAILED test_logparse.py::test_int_latency - TypeError: 'NoneType' object is n...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 1 passed in 0.03s\n"
+ },
+ {
+  "id": "t11_word_wrap",
+  "category": "implement",
+  "latency_s": 19.06,
+  "usage": {
+   "completion_tokens": 306,
+   "prompt_tokens": 218,
+   "total_tokens": 524,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "wrap.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: wrap.py\n```python\ndef wrap(text, width):\n    \"\"\"Greedy word wrap.\n\n    - Split on whitespace; join words on a line with single spaces.\n    - Each returned line is at most `width` chars, except a single word longer\n      than `width` is placed alone on its own line (never split words).\n    - Returns a list of lines; empty/whitespace-only text returns [].\n    \"\"\"\n    if not text or not text.strip():\n        return []\n\n    words = text.split()\n    lines = []\n    current_line = []\n    current_length = 0\n\n    for word in words:\n        # If current line is empty, we can always add the word\n        if not current_line:\n            current_line.append(word)\n            current_length = len(word)\n        else:\n            # Check if adding the next word (with a space) exceeds width\n            if current_length + 1 + len(word) <= width:\n                current_line.append(word)\n                current_length += 1 + len(word)\n            else:\n                # Finish the current line and start a new one\n                lines.append(' '.join(current_line))\n                current_line = [word]\n                current_length = len(word)\n\n    # Don't forget the last line\n    if current_line:\n        lines.append(' '.join(current_line))\n\n    return lines\n```",
+  "pass": true
+ },
+ {
+  "id": "t12_handler_validation",
+  "category": "implement",
+  "latency_s": 28.17,
+  "usage": {
+   "completion_tokens": 468,
+   "prompt_tokens": 300,
+   "total_tokens": 768,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "api.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: api.py\n```python\ndef handle_create_user(body):\n    # Check if body is a dict\n    if not isinstance(body, dict):\n        return (400, {\"errors\": {\"body\": \"must be an object\"}})\n\n    errors = {}\n    name = None\n    age = None\n    email = None\n\n    # Validate name\n    if \"name\" not in body:\n        errors[\"name\"] = \"required\"\n    else:\n        val = body[\"name\"]\n        if not isinstance(val, str):\n            errors[\"name\"] = \"must be a string\"\n        else:\n            stripped = val.strip()\n            if not stripped:\n                errors[\"name\"] = \"must be non-empty\"\n            else:\n                name = stripped\n\n    # Validate age\n    if \"age\" not in body:\n        errors[\"age\"] = \"required\"\n    else:\n        val = body[\"age\"]\n        # bool is a subclass of int, so we must explicitly reject bools\n        if isinstance(val, bool) or not isinstance(val, int):\n            errors[\"age\"] = \"must be an integer\"\n        elif val < 0 or val > 150:\n            errors[\"age\"] = \"must be between 0 and 150\"\n        else:\n            age = val\n\n    # Validate email (optional)\n    if \"email\" in body:\n        val = body[\"email\"]\n        if not isinstance(val, str):\n            errors[\"email\"] = \"must be a string\"\n        else:\n            if val.count('@') != 1:\n                errors[\"email\"] = \"must contain exactly one '@'\"\n            else:\n                local, domain = val.split('@')\n                if not local or not domain:\n                    errors[\"email\"] = \"parts before and after '@' must be non-empty\"\n                else:\n                    email = val\n\n    if errors:\n        return (422, {\"errors\": errors})\n\n    return (201, {\"name\": name, \"age\": age, \"email\": email})\n```",
+  "pass": true
+ },
+ {
+  "id": "t13_cache_ttl",
+  "category": "feature",
+  "latency_s": 16.12,
+  "usage": {
+   "completion_tokens": 256,
+   "prompt_tokens": 279,
+   "total_tokens": 535,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "cache.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: cache.py\n```python\nimport time\n\nclass Cache:\n    def __init__(self, clock=time.monotonic):\n        self._clock = clock\n        self._data = {}\n\n    def set(self, key, value, ttl=None):\n        if ttl is not None:\n            expire_at = self._clock() + ttl\n            self._data[key] = (value, expire_at)\n        else:\n            self._data[key] = (value, None)\n\n    def get(self, key, default=None):\n        entry = self._data.get(key)\n        if entry is None:\n            return default\n        value, expire_at = entry\n        if expire_at is not None and self._clock() >= expire_at:\n            del self._data[key]\n            return default\n        return value\n\n    def __len__(self):\n        now = self._clock()\n        expired_keys = [k for k, (v, expire_at) in self._data.items() if expire_at is not None and now >= expire_at]\n        for k in expired_keys:\n            del self._data[k]\n        return len(self._data)\n```",
+  "pass": true
+ },
+ {
+  "id": "t14_cli_flags",
+  "category": "feature",
+  "latency_s": 12.38,
+  "usage": {
+   "completion_tokens": 184,
+   "prompt_tokens": 257,
+   "total_tokens": 441,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "grepcli.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: grepcli.py\n```python\nimport argparse\n\ndef main(argv):\n    p = argparse.ArgumentParser()\n    p.add_argument(\"pattern\")\n    p.add_argument(\"file\")\n    p.add_argument(\"--limit\", type=int, default=None)\n    p.add_argument(\"--ignore-case\", \"-i\", action=\"store_true\")\n    args = p.parse_args(argv)\n    out = []\n    with open(args.file) as f:\n        for line in f:\n            line = line.rstrip(\"\\n\")\n            search_line = line if not args.ignore_case else line.lower()\n            search_pattern = args.pattern if not args.ignore_case else args.pattern.lower()\n            if search_pattern in search_line:\n                out.append(line)\n                if args.limit is not None and len(out) >= args.limit:\n                    break\n    return out\n```",
+  "pass": true
+ },
+ {
+  "id": "t15_dataclass_validation",
+  "category": "feature",
+  "latency_s": 11.46,
+  "usage": {
+   "completion_tokens": 175,
+   "prompt_tokens": 224,
+   "total_tokens": 399,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "order.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: order.py\n```python\nfrom dataclasses import dataclass\n\nSUPPORTED = {\"USD\", \"EUR\", \"INR\"}\n\n@dataclass\nclass Order:\n    sku: str\n    quantity: int\n    unit_price: float\n    currency: str = \"USD\"\n\n    def __post_init__(self):\n        if not isinstance(self.quantity, int) or self.quantity <= 0:\n            raise ValueError(\"quantity must be a positive int\")\n        if self.unit_price < 0:\n            raise ValueError(\"unit_price must be >= 0\")\n        if self.currency not in SUPPORTED:\n            raise ValueError(f\"currency must be one of {SUPPORTED}\")\n\n    @property\n    def total(self):\n        return round(self.quantity * self.unit_price, 2)\n```",
+  "pass": true
+ },
+ {
+  "id": "t16_rename_across_files",
+  "category": "refactor",
+  "latency_s": 9.49,
+  "usage": {
+   "completion_tokens": 137,
+   "prompt_tokens": 267,
+   "total_tokens": 404,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "checkout.py",
+   "pricing.py",
+   "report.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: checkout.py\n```python\nfrom pricing import compute_total\n\ndef checkout(cart, tax_rate):\n    return {\"items\": len(cart), \"total\": compute_total([i[\"price\"] for i in cart], tax_rate)}\n```\n\n### FILE: pricing.py\n```python\ndef compute_total(prices, tax_rate=0.0):\n    subtotal = sum(prices)\n    return round(subtotal * (1 + tax_rate), 2)\n```\n\n### FILE: report.py\n```python\nimport pricing\n\ndef daily_report(orders):\n    return sum(pricing.compute_total(o) for o in orders)\n```",
+  "pass": true
+ },
+ {
+  "id": "t17_signature_change",
+  "category": "refactor",
+  "latency_s": 9.84,
+  "usage": {
+   "completion_tokens": 140,
+   "prompt_tokens": 272,
+   "total_tokens": 412,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "invoice.py",
+   "money.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: money.py\n```python\nSYMBOLS = {\"USD\": \"$\", \"EUR\": \"\u20ac\", \"INR\": \"\u20b9\"}\n\ndef format_price(amount, currency=\"USD\"):\n    symbol = SYMBOLS.get(currency)\n    if symbol:\n        return f\"{symbol}{amount:,.2f}\"\n    return f\"{currency} {amount:,.2f}\"\n```\n\n### FILE: invoice.py\n```python\nfrom money import format_price\n\ndef render(lines):\n    return [f\"{l['item']}: {format_price(l['amount'], l.get('currency', 'USD'))}\" for l in lines]\n```",
+  "pass": true
+ },
+ {
+  "id": "t18_quadratic_dupes",
+  "category": "performance",
+  "latency_s": 6.49,
+  "usage": {
+   "completion_tokens": 83,
+   "prompt_tokens": 218,
+   "total_tokens": 301,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "dupes.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: dupes.py\n```python\ndef find_duplicates(items):\n    seen = set()\n    duplicates = set()\n    out = []\n    for x in items:\n        if x in seen:\n            if x not in duplicates:\n                out.append(x)\n                duplicates.add(x)\n        else:\n            seen.add(x)\n    return out\n```",
+  "pass": true
+ },
+ {
+  "id": "t19_deep_flatten",
+  "category": "performance",
+  "latency_s": 6.6,
+  "usage": {
+   "completion_tokens": 87,
+   "prompt_tokens": 198,
+   "total_tokens": 285,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "flat.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: flat.py\n```python\ndef flatten(x):\n    out = []\n    stack = [iter(x)]\n    while stack:\n        try:\n            item = next(stack[-1])\n            if isinstance(item, list):\n                stack.append(iter(item))\n            else:\n                out.append(item)\n        except StopIteration:\n            stack.pop()\n    return out\n```",
+  "pass": true
+ },
+ {
+  "id": "t20_write_tests",
+  "category": "write-tests",
+  "latency_s": 92.83,
+  "usage": {
+   "completion_tokens": 1617,
+   "prompt_tokens": 351,
+   "total_tokens": 1968,
+   "prompt_tokens_details": {
+    "cached_tokens": 26
+   }
+  },
+  "files": [
+   "test_slugify.py"
+  ],
+  "finish": "stop",
+  "response": "### FILE: test_slugify.py\n```python\nimport pytest\nfrom slugify import slugify\n\n\nclass TestSlugifyBasic:\n    \"\"\"Test basic slugification functionality.\"\"\"\n\n    def test_simple_string(self):\n        \"\"\"A simple alphanumeric string should be returned as-is (lowercased).\"\"\"\n        assert slugify(\"Hello World\") == \"hello-world\"\n\n    def test_empty_string(self):\n        \"\"\"An empty string should return an empty string.\"\"\"\n        assert slugify(\"\") == \"\"\n\n    def test_whitespace_only(self):\n        \"\"\"A string with only whitespace should return an empty string.\"\"\"\n        assert slugify(\"   \") == \"\"\n\n    def test_single_word(self):\n        \"\"\"A single word should be lowercased.\"\"\"\n        assert slugify(\"Hello\") == \"hello\"\n\n    def test_numbers_preserved(self):\n        \"\"\"Numbers should be preserved in the slug.\"\"\"\n        assert slugify(\"Test 123\") == \"test-123\"\n\n    def test_mixed_case(self):\n        \"\"\"Mixed case should be lowercased.\"\"\"\n        assert slugify(\"HeLLo WoRLd\") == \"hello-world\"\n\n\nclass TestSlugifyUnicode:\n    \"\"\"Test Unicode normalization and accent stripping.\"\"\"\n\n    def test_accented_characters(self):\n        \"\"\"Accented characters should be stripped to their ASCII base.\"\"\"\n        assert slugify(\"caf\u00e9\") == \"cafe\"\n        assert slugify(\"na\u00efve\") == \"naive\"\n        assert slugify(\"r\u00e9sum\u00e9\") == \"resume\"\n\n    def test_non_ascii_other(self):\n        \"\"\"Non-ASCII characters that don't have an ASCII equivalent should be dropped.\"\"\"\n        # '\u00df' (German sharp s) often normalizes to 'ss' in NFKD, but let's test a truly non-ASCII char\n        # The '\u00df' case: NFKD decomposes '\u00df' to 'ss'. So it becomes 'strasse'.\n        # Let's test a character that is dropped entirely, e.g., some CJK or emoji.\n        assert slugify(\"hello \u4e16\u754c\") == \"hello\"\n        assert slugify(\"hello \ud83c\udf0d\") == \"hello\"\n\n    def test_unicode_spaces(self):\n        \"\"\"Unicode spaces should be treated as separators.\"\"\"\n        # Non-breaking space\n        assert slugify(\"hello\\u00a0world\") == \"hello-world\"\n\n\nclass TestSlugifySeparators:\n    \"\"\"Test handling of separators and special characters.\"\"\"\n\n    def test_multiple_spaces(self):\n        \"\"\"Multiple spaces should become a single hyphen.\"\"\"\n        assert slugify(\"hello   world\") == \"hello-world\"\n\n    def test_special_characters(self):\n        \"\"\"Special characters should be replaced by hyphens.\"\"\"\n        assert slugify(\"hello!@#$%^&*()world\") == \"hello-world\"\n\n    def test_leading_trailing_separators(self):\n        \"\"\"Leading and trailing separators should be removed.\"\"\"\n        assert slugify(\"  hello  \") == \"hello\"\n        assert slugify(\"---hello---\") == \"hello\"\n        assert slugify(\"!@#hello!@#\") == \"hello\"\n\n    def test_consecutive_special_chars(self):\n        \"\"\"Consecutive special characters should result in a single hyphen.\"\"\"\n        assert slugify(\"hello---world\") == \"hello-world\"\n        assert slugify(\"hello!!!world\") == \"hello-world\"\n\n\nclass TestSlugifyMaxLength:\n    \"\"\"Test max_len parameter.\"\"\"\n\n    def test_shorter_than_max(self):\n        \"\"\"If the slug is shorter than max_len, it should be returned as-is.\"\"\"\n        assert slugify(\"hello\", max_len=10) == \"hello\"\n\n    def test_longer_than_max(self):\n        \"\"\"If the slug is longer than max_len, it should be truncated.\"\"\"\n        assert slugify(\"hello world foo bar\", max_len=10) == \"hello-worl\"\n\n    def test_truncation_at_hyphen(self):\n        \"\"\"Truncation should remove trailing hyphens.\"\"\"\n        # \"hello-world\" is 11 chars. max_len=10 -> \"hello-worl\"\n        # Let's construct a case where truncation hits a hyphen.\n        # \"hello-world\" -> len 11.\n        # If we have \"hello-world\" and max_len=5, it becomes \"hello\"[:5] -> \"hello\". No trailing hyphen.\n        # Let's try \"hello-world\" with max_len=6 -> \"hello-\" -> rstrip(\"-\") -> \"hello\"\n        assert slugify(\"hello-world\", max_len=6) == \"hello\"\n\n    def test_truncation_in_middle_of_word(self):\n        \"\"\"Truncation in the middle of a word should just cut it off.\"\"\"\n        assert slugify(\"hello\", max_len=3) == \"hel\"\n\n    def test_max_len_zero(self):\n        \"\"\"max_len=0 should return an empty string.\"\"\"\n        assert slugify(\"hello\", max_len=0) == \"\"\n\n    def test_max_len_negative(self):\n        \"\"\"Negative max_len should return an empty string (slicing behavior).\"\"\"\n        assert slugify(\"hello\", max_len=-1) == \"\"\n\n\nclass TestSlugifyEdgeCases:\n    \"\"\"Test edge cases and potential regressions.\"\"\"\n\n    def test_only_special_chars(self):\n        \"\"\"A string with only special characters should return an empty string.\"\"\"\n        assert slugify(\"!@#$%\") == \"\"\n\n    def test_unicode_normalization_nfd_vs_nfc(self):\n        \"\"\"Ensure NFKD normalization handles composed and decomposed forms consistently.\"\"\"\n        # '\u00e9' can be U+00E9 (composed) or U+0065 U+0301 (decomposed)\n        # NFKD should handle both to 'e'\n        assert slugify(\"caf\u00e9\") == slugify(\"cafe\\u0301\")\n\n    def test_hyphens_in_input(self):\n        \"\"\"Existing hyphens should be preserved as part of the separator logic.\"\"\"\n        assert slugify(\"hello-world\") == \"hello-world\"\n\n    def test_underscores(self):\n        \"\"\"Underscores should be treated as separators.\"\"\"\n        assert slugify(\"hello_world\") == \"hello-world\"\n\n    def test_dots(self):\n        \"\"\"Dots should be treated as separators.\"\"\"\n        assert slugify(\"hello.world\") == \"hello-world\"\n\n    def test_mixed_separators(self):\n        \"\"\"Mixed separators should result in single hyphens.\"\"\"\n        assert slugify(\"hello_world.test\") == \"hello-world-test\"\n\n    def test_max_len_with_trailing_hyphen_after_truncation(self):\n        \"\"\"Ensure trailing hyphen is removed after truncation.\"\"\"\n        # \"hello-world\" is 11 chars.\n        # max_len=6 -> \"hello-\" -> rstrip(\"-\") -> \"hello\"\n        assert slugify(\"hello-world\", max_len=6) == \"hello\"\n\n    def test_max_len_exact_length(self):\n        \"\"\"If the slug is exactly max_len, it should be returned as-is.\"\"\"\n        assert slugify(\"hello\", max_len=5) == \"hello\"\n\n    def test_max_len_with_unicode(self):\n        \"\"\"Truncation should work on the normalized string.\"\"\"\n        # \"caf\u00e9\" -> \"cafe\" (4 chars)\n        assert slugify(\"caf\u00e9\", max_len=3) == \"caf\"\n```",
+  "pass": false,
+  "orig_pass": false,
+  "mutants_killed": 5,
+  "mutants_total": 5
+ }
+]

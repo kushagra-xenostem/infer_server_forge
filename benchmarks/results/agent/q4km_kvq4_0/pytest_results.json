@@ -1,0 +1,102 @@
+{
+ "t01_pagination_off_by_one/case": {
+  "rc": 2,
+  "tail": "\n==================================== ERRORS ====================================\n________________________ ERROR collecting test_pager.py ________________________\n/deps/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/deps/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/deps/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\ntest_pager.py:1: in <module>\n    from pager import paginate, page_count\nE     File \"/work/t01_pagination_off_by_one/case/pager.py\", line 1\nE       return the number of pages for a given of items.\nE   IndentationError: unexpected indent\n=========================== short test summary info ============================\nERROR test_pager.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.21s\n"
+ },
+ "t02_mutable_default/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n_________________________________ test_no_leak _________________________________\n\n    def test_no_leak():\n        assert add_tag(\"a\", \"x\")[\"tags\"] == [\"x\"]\n>       assert add_tag(\"b\", \"y\")[\"tags\"] == [\"y\"]\nE       AssertionError: assert ['x', 'y'] == ['y']\nE         \nE         At index 0 diff: 'x' != 'y'\nE         Left contains one more item: 'y'\nE         Use -v to get more diff\n\ntest_tags.py:4: AssertionError\n=========================== short test summary info ============================\nFAILED test_tags.py::test_no_leak - AssertionError: assert ['x', 'y'] == ['y']\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t03_traceback_fix/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n________________________________ test_defaults _________________________________\n\n    def test_defaults():\n>       c = load_config({\"host\": \"h\"})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntest_config.py:5: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = {'host': 'h'}\n\n    def load_config(raw):\n        return {\n            \"host\": raw[\"host\"],\n>           \"timeout\": int(raw[\"timeout\"]),\n                           ^^^^^^^^^^^^^^\n            \"port\": int(raw[\"port\"]),\n            \"debug\": bool(raw[\"debug\"]),\n        }\nE       KeyError: 'timeout'\n\nconfig.py:6: KeyError\n=========================== short test summary info ============================\nFAILED test_config.py::test_defaults - KeyError: 'timeout'\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t04_inheritance_init/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n__________________________________ test_admin __________________________________\n\n    def test_admin():\n        a = AdminUser(\"Ann\", \"ANN@X.IO\", [\"write\", \"read\"])\n>       assert a.email == \"ann@x.io\"\n               ^^^^^^^\nE       AttributeError: 'AdminUser' object has no attribute 'email'\n\ntest_users.py:4: AttributeError\n=========================== short test summary info ============================\nFAILED test_users.py::test_admin - AttributeError: 'AdminUser' object has no ...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t05_timezone_bug/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n_________________________________ test_offsets _________________________________\n\n    def test_offsets():\n>       assert hours_between(\"2026-10-04T12:00:00+02:00\", \"2026-10-04T12:00:00Z\") == 2.0\nE       AssertionError: assert 0.0 == 2.0\nE        +  where 0.0 = hours_between('2026-10-04T12:00:00+02:00', '2026-10-04T12:00:00Z')\n\ntest_timeutil.py:3: AssertionError\n=========================== short test summary info ============================\nFAILED test_timeutil.py::test_offsets - AssertionError: assert 0.0 == 2.0\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.03s\n"
+ },
+ "t06_sql_injection/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n__________________________________ test_quote __________________________________\n\n    def test_quote():\n>       assert find_user(make_db(), \"O'Brien\") == [{\"id\": 2, \"name\": \"O'Brien\"}]\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntest_db.py:3: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncon = <sqlite3.Connection object at 0x73065fa5c6d0>, name = \"O'Brien\"\n\n    def find_user(con, name):\n>       rows = con.execute(f\"SELECT id, name FROM users WHERE name = '{name}'\").fetchall()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       sqlite3.OperationalError: near \"Brien\": syntax error\n\ndb.py:10: OperationalError\n=========================== short test summary info ============================\nFAILED test_db.py::test_quote - sqlite3.OperationalError: near \"Brien\": synta...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.03s\n"
+ },
+ "t07_async_gather/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n__________________________ test_order_and_concurrency __________________________\n\n    def test_order_and_concurrency():\n        t = time.perf_counter()\n        r = asyncio.run(fetch_all([\"a\", \"b\", \"c\", \"d\", \"e\"]))\n>       assert r == [\"<a>\", \"<b>\", \"<c>\", \"<d>\", \"<e>\"]\nE       AssertionError: assert [<coroutine o...71c345fdef60>] == ['<a>', '<b>'... '<d>', '<e>']\nE         \nE         At index 0 diff: <coroutine object fetch at 0x71c345fdcfb0> != '<a>'\nE         Use -v to get more diff\n\ntest_fetcher.py:6: AssertionError\n=========================== short test summary info ============================\nFAILED test_fetcher.py::test_order_and_concurrency - AssertionError: assert [...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\nsys:1: RuntimeWarning: coroutine 'fetch' was never awaited\n"
+ },
+ "t08_merge_intervals/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n__________________________________ test_basic __________________________________\n\n    def test_basic():\n>       assert merge_intervals([(5, 6), (1, 3), (2, 4)]) == [(1, 4), (5, 6)]\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntest_intervals.py:3: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nintervals = [(5, 6), (1, 3), (2, 4)]\n\n    def merge_intervals(intervals):\n        \"\"\"Merge overlapping or touching closed intervals.\n    \n        intervals: list of (start, end) tuples with start <= end, in any order.\n        Returns a sorted list of merged (start, end) tuples.\n        Touching intervals like (1, 2) and (2, 3) merge into (1, 3).\n        \"\"\"\n>       raise NotImplementedError\nE       NotImplementedError\n\nintervals.py:8: NotImplementedError\n=========================== short test summary info ============================\nFAILED test_intervals.py::test_basic - NotImplementedError\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t09_lru_cache/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n___________________________________ test_lru ___________________________________\n\n    def test_lru():\n>       c = LRUCache(2)\n            ^^^^^^^^^^^\n\ntest_lru.py:3: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <lru.LRUCache object at 0x7032d62d8d70>, capacity = 2\n\n    def __init__(self, capacity: int):\n>       raise NotImplementedError\nE       NotImplementedError\n\nlru.py:3: NotImplementedError\n=========================== short test summary info ============================\nFAILED test_lru.py::test_lru - NotImplementedError\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t10_log_parser/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n___________________________________ test_ok ____________________________________\n\n    def test_ok():\n>       assert parse_line(\"2026-10-04 17:02:11 INFO [api] GET /v1/users 200 13.5ms\") == dict(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            date=\"2026-10-04\", time=\"17:02:11\", level=\"INFO\", component=\"api\", method=\"GET\",\n            path=\"/v1/users\", status=200, latency_ms=13.5)\n\ntest_logparse.py:3: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nline = '2026-10-04 17:02:11 INFO [api] GET /v1/users 200 13.5ms'\n\n    def parse_line(line):\n>       raise NotImplementedError\nE       NotImplementedError\n\nlogparse.py:2: NotImplementedError\n=========================== short test summary info ============================\nFAILED test_logparse.py::test_ok - NotImplementedError\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t11_word_wrap/case": {
+  "rc": 2,
+  "tail": "\n==================================== ERRORS ====================================\n________________________ ERROR collecting test_wrap.py _________________________\n/deps/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/deps/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/deps/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\ntest_wrap.py:1: in <module>\n    from wrap import wrap\nE     File \"/work/t11_word_wrap/case/wrap.py\", line 1\nE       def wrapwrap(text width):\nE                         ^^^^^\nE   SyntaxError: invalid syntax\n=========================== short test summary info ============================\nERROR test_wrap.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.16s\n"
+ },
+ "t12_handler_validation/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n___________________________________ test_ok ____________________________________\n\n    def test_ok():\n>       assert h({\"name\": \" Ann \", \"age\": 30}) == (201, {\"name\": \"Ann\", \"age\": 30, \"email\": None})\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntest_api.py:3: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nbody = {'name': ' Ann ', 'age': 30}\n\n    def handle_create_user(body):\n>       raise NotImplementedError\nE       NotImplementedError\n\napi.py:2: NotImplementedError\n=========================== short test summary info ============================\nFAILED test_api.py::test_ok - NotImplementedError\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t13_cache_ttl/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n___________________________________ test_ttl ___________________________________\n\n    def test_ttl():\n        clk = Clock(); c = Cache(clock=clk)\n>       c.set(\"a\", 1, ttl=10); c.set(\"b\", 2)\n        ^^^^^^^^^^^^^^^^^^^^^\nE       TypeError: Cache.set() got an unexpected keyword argument 'ttl'\n\ntest_cache.py:7: TypeError\n=========================== short test summary info ============================\nFAILED test_cache.py::test_ttl - TypeError: Cache.set() got an unexpected key...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t14_cli_flags/case": {
+  "rc": 2,
+  "tail": "\n==================================== ERRORS ====================================\n_______________________ ERROR collecting test_grepcli.py _______________________\n/deps/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/deps/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/deps/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\ntest_grepcli.py:1: in <module>\n    from grepcli import main\nE     File \"/work/t14_cli_flags/case/grepcli.py\", line 5\nE       task.add_argument(\"pattern\nE                         ^\nE   SyntaxError: unterminated string literal (detected at line 5)\n=========================== short test summary info ============================\nERROR test_grepcli.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.16s\n"
+ },
+ "t15_dataclass_validation/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n__________________________________ test_total __________________________________\n\n    def test_total():\n>       assert Order(\"a\", 3, 1.1).total == 3.3\n               ^^^^^^^^^^^^^^^^^^^^^^^^\nE       AttributeError: 'Order' object has no attribute 'total'\n\ntest_order.py:4: AttributeError\n=========================== short test summary info ============================\nFAILED test_order.py::test_total - AttributeError: 'Order' object has no attr...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t16_rename_across_files/case": {
+  "rc": 2,
+  "tail": "\n==================================== ERRORS ====================================\n_______________________ ERROR collecting test_rename.py ________________________\n/deps/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/deps/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/deps/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\ntest_rename.py:2: in <module>\n    from checkout import checkout\nE     File \"/work/t16_rename_across_files/case/checkout.py\", line 4\nE       return {\"subtotal\": task(cart),(cart\":```\nE                                           ^\nE   SyntaxError: unterminated string literal (detected at line 4)\n=========================== short test summary info ============================\nERROR test_rename.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.16s\n"
+ },
+ "t17_signature_change/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n___________________________________ test_fmt ___________________________________\n\n    def test_fmt():\n        assert format_price(1234.5) == \"$1,234.50\"\n>       assert format_price(3, \"EUR\") == \"\u20ac3.00\"\n               ^^^^^^^^^^^^^^^^^^^^^^\nE       TypeError: format_price() takes 1 positional argument but 2 were given\n\ntest_money.py:5: TypeError\n=========================== short test summary info ============================\nFAILED test_money.py::test_fmt - TypeError: format_price() takes 1 positional...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t18_quadratic_dupes/case": {
+  "rc": "timeout",
+  "tail": ""
+ },
+ "t19_deep_flatten/case": {
+  "rc": 1,
+  "tail": "atten(item))\n               ^^^^^^^^^^^^^\nflat.py:5: in flatten\n    out.extend(flatten(item))\n               ^^^^^^^^^^^^^\nflat.py:5: in flatten\n    out.extend(flatten(item))\n               ^^^^^^^^^^^^^\nflat.py:5: in flatten\n    out.extend(flatten(item))\n               ^^^^^^^^^^^^^\nflat.py:5: in flatten\n    out.extend(flatten(item))\n               ^^^^^^^^^^^^^\nflat.py:5: in flatten\n    out.extend(flatten(item))\n               ^^^^^^^^^^^^^\nflat.py:5: in flatten\n    out.extend(flatten(item))\n               ^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nx = [[[[[[[...], 9028], 9029], 9030], 9031], 9032], 9033]\n\n    def flatten(x):\n        out = []\n        for item in x:\n            if isinstance(item, list):\n>               out.extend(flatten(item))\n                           ^^^^^^^^^^^^^\nE               RecursionError: maximum recursion depth exceeded\n\nflat.py:5: RecursionError\n!!! Recursion error detected, but an error occurred locating the origin of recursion.\n  The following exception happened when comparing locals in the stack frame:\n    RecursionError: maximum recursion depth exceeded in comparison\n  Displaying first and last 10 stack frames out of 968.\n=========================== short test summary info ============================\nFAILED test_flat.py::test_deep - RecursionError: maximum recursion depth exce...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 1 passed in 0.03s\n"
+ },
+ "t20_write_tests/mut_no_accent_fold": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/mut_no_lower": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/mut_no_rstrip_after_trunc": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/mut_no_run_collapse": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/mut_no_strip": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/orig": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ }
+}

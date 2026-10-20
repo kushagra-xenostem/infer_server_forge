@@ -1,0 +1,16 @@
+{
+ "pass": 14,
+ "total": 20,
+ "pass_rate": 0.7,
+ "by_category": {
+  "bugfix": "6/7",
+  "feature": "2/3",
+  "implement": "5/5",
+  "performance": "0/2",
+  "refactor": "1/2",
+  "write-tests": "0/1"
+ },
+ "format_ok": 20,
+ "truncated": 0,
+ "http_errors": 0
+}

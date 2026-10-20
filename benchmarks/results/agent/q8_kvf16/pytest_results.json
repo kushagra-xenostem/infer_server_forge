@@ -1,0 +1,102 @@
+{
+ "t01_pagination_off_by_one/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.01s\n"
+ },
+ "t02_mutable_default/case": {
+  "rc": 0,
+  "tail": "..                                                                       [100%]\n2 passed in 0.01s\n"
+ },
+ "t03_traceback_fix/case": {
+  "rc": 0,
+  "tail": "....                                                                     [100%]\n4 passed in 0.01s\n"
+ },
+ "t04_inheritance_init/case": {
+  "rc": 0,
+  "tail": ".                                                                        [100%]\n1 passed in 0.01s\n"
+ },
+ "t05_timezone_bug/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.02s\n"
+ },
+ "t06_sql_injection/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.02s\n"
+ },
+ "t07_async_gather/case": {
+  "rc": 0,
+  "tail": ".                                                                        [100%]\n1 passed in 0.21s\n"
+ },
+ "t08_merge_intervals/case": {
+  "rc": 1,
+  "tail": "test_intervals.py:3: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nintervals = [(1, 3), (2, 4), (5, 6)]\n\n    def merge_intervals(intervals):\n        \"\"\"Merge overlapping or touching closed intervals.\n    \n        intervals: list of (start, end) tuples with start <= end, in any order.\n        Returns a sorted list of merged (start, end) tuples.\n        Touching intervals like (1, 2) and (2, 3) merge into (1, 3).\n        \"\"\"\n        if not intervals:\n            return []\n    \n        # Sort intervals by the start time\n        intervals.sort(key=lambda x: x[0])\n    \n        merged = []\n        for interval in intervals:\n            # If the list of merged intervals is empty or if the current\n            # interval does not overlap with the previous, simply append it.\n            if not merged or merged[-1][1] < interval[0]:\n                merged.append(interval)\n            else:\n                # Otherwise, there is overlap, so we merge the current and previous\n                # intervals.\n>               merged[-1][1] = max(merged[-1][1], interval[1])\n                ^^^^^^^^^^^^^\nE               TypeError: 'tuple' object does not support item assignment\n\nintervals.py:23: TypeError\n=========================== short test summary info ============================\nFAILED test_intervals.py::test_basic - TypeError: 'tuple' object does not sup...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.03s\n"
+ },
+ "t09_lru_cache/case": {
+  "rc": 0,
+  "tail": "..                                                                       [100%]\n2 passed in 0.01s\n"
+ },
+ "t10_log_parser/case": {
+  "rc": 1,
+  "tail": "\n\n    def test_ok():\n>       assert parse_line(\"2026-10-04 17:02:11 INFO [api] GET /v1/users 200 13.5ms\") == dict(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            date=\"2026-10-04\", time=\"17:02:11\", level=\"INFO\", component=\"api\", method=\"GET\",\n            path=\"/v1/users\", status=200, latency_ms=13.5)\n\ntest_logparse.py:3: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nline = '2026-10-04 17:02:11 INFO [api] GET /v1/users 200 13.5ms'\n\n    def parse_line(line):\n        pattern = r'(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}) (\\w+) \\[(.*?)\\] (\\w+) (.+?) (\\d+) (\\d+\\.\\d+)ms'\n        match = re.match(pattern, line)\n        if match:\n            return {\n                'date': match.group(1),\n                'time': match.group(2),\n                'level': match.group(3),\n                'component': match.group(4),\n                'method': match.group(5),\n                'path': match.group(6),\n>               'status': int(match.group(7)),\n                          ^^^^^^^^^^^^^^^^^^^\n                'latency_ms': float(match.group(8))\n            }\nE           ValueError: invalid literal for int() with base 10: '13.5'\n\nlogparse.py:14: ValueError\n=========================== short test summary info ============================\nFAILED test_logparse.py::test_ok - ValueError: invalid literal for int() with...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t11_word_wrap/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.01s\n"
+ },
+ "t12_handler_validation/case": {
+  "rc": 1,
+  "tail": ".F\n=================================== FAILURES ===================================\n____________________________ test_errors_all_fields ____________________________\n\n    def test_errors_all_fields():\n        s, r = h({\"name\": \"  \", \"age\": True, \"email\": \"a@@b\"})\n>       assert s == 422 and set(r[\"errors\"]) == {\"name\", \"age\", \"email\"}\nE       AssertionError: assert (422 == 422 and {'email', 'name'} == {'age', 'email', 'name'}\nE         \nE         Extra items in the right set:\nE         'age'\nE         Use -v to get more diff)\n\ntest_api.py:7: AssertionError\n=========================== short test summary info ============================\nFAILED test_api.py::test_errors_all_fields - AssertionError: assert (422 == 4...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 1 passed in 0.02s\n"
+ },
+ "t13_cache_ttl/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n___________________________________ test_ttl ___________________________________\n\n    def test_ttl():\n        clk = Clock(); c = Cache(clock=clk)\n        c.set(\"a\", 1, ttl=10); c.set(\"b\", 2)\n>       assert c.get(\"a\") == 1 and len(c) == 2\n                                   ^^^^^^\n\ntest_cache.py:8: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <cache.Cache object at 0x7811d6b80d40>\n\n    def __len__(self):\n>       self._data = {key: value for key, (value, expiration) in self._data.items() if expiration > self._clock()}\n                                          ^^^^^^^^^^^^^^^^^^^\nE       TypeError: cannot unpack non-iterable int object\n\ncache.py:24: TypeError\n=========================== short test summary info ============================\nFAILED test_cache.py::test_ttl - TypeError: cannot unpack non-iterable int ob...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t14_cli_flags/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.02s\n"
+ },
+ "t15_dataclass_validation/case": {
+  "rc": 0,
+  "tail": "......                                                                   [100%]\n6 passed in 0.01s\n"
+ },
+ "t16_rename_across_files/case": {
+  "rc": 0,
+  "tail": "..                                                                       [100%]\n2 passed in 0.01s\n"
+ },
+ "t17_signature_change/case": {
+  "rc": 0,
+  "tail": "..                                                                       [100%]\n2 passed in 0.01s\n"
+ },
+ "t18_quadratic_dupes/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n_________________________________ test_correct _________________________________\n\n    def test_correct():\n>       assert find_duplicates([3, 1, 3, 2, 1, 3]) == [3, 1]\nE       assert [1, 3] == [3, 1]\nE         \nE         At index 0 diff: 1 != 3\nE         Use -v to get more diff\n\ntest_dupes.py:4: AssertionError\n=========================== short test summary info ============================\nFAILED test_dupes.py::test_correct - assert [1, 3] == [3, 1]\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t19_deep_flatten/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n__________________________________ test_order __________________________________\n\n    def test_order():\n>       assert flatten([1, [2, [3, 4]], 5, [], [[6]]]) == [1, 2, 3, 4, 5, 6]\nE       assert [6, 5, 4, 3, 2, 1] == [1, 2, 3, 4, 5, 6]\nE         \nE         At index 0 diff: 6 != 1\nE         Use -v to get more diff\n\ntest_flat.py:3: AssertionError\n=========================== short test summary info ============================\nFAILED test_flat.py::test_order - assert [6, 5, 4, 3, 2, 1] == [1, 2, 3, 4, 5...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t20_write_tests/mut_no_accent_fold": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/mut_no_lower": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/mut_no_rstrip_after_trunc": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/mut_no_run_collapse": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/mut_no_strip": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ },
+ "t20_write_tests/orig": {
+  "rc": 5,
+  "tail": "\nno tests ran in 0.00s\n"
+ }
+}

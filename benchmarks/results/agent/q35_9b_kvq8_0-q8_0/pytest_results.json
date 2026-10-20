@@ -1,0 +1,102 @@
+{
+ "t01_pagination_off_by_one/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.01s\n"
+ },
+ "t02_mutable_default/case": {
+  "rc": 0,
+  "tail": "..                                                                       [100%]\n2 passed in 0.01s\n"
+ },
+ "t03_traceback_fix/case": {
+  "rc": 0,
+  "tail": "....                                                                     [100%]\n4 passed in 0.01s\n"
+ },
+ "t04_inheritance_init/case": {
+  "rc": 0,
+  "tail": ".                                                                        [100%]\n1 passed in 0.01s\n"
+ },
+ "t05_timezone_bug/case": {
+  "rc": 1,
+  "tail": "' in s:\n                    idx = s.rfind('+')\n                elif '-' in s[19:]:\n                    idx = s.rfind('-', 19)\n                else:\n                    idx = len(s)\n    \n                dt_part = s[:idx]\n                tz_part = s[idx:]\n    \n                # Parse datetime part\n                # Handle microseconds if present\n                if '.' in dt_part:\n                    dt = datetime.strptime(dt_part, \"%Y-%m-%dT%H:%M:%S.%f\")\n                else:\n                    dt = datetime.strptime(dt_part, \"%Y-%m-%dT%H:%M:%S\")\n    \n                # Parse timezone offset\n                if tz_part:\n                    if tz_part == 'Z':\n                        tz = timezone.utc\n                    else:\n                        # Parse +HH:MM or -HH:MM\n                        sign = 1 if tz_part[0] == '+' else -1\n                        tz_str = tz_part[1:]\n                        hours, minutes = map(int, tz_str.split(':'))\n                        offset = sign * (hours * 3600 + minutes * 60)\n>                       tz = timezone(offset)\n                             ^^^^^^^^^^^^^^^^\nE                       TypeError: timezone() argument 1 must be datetime.timedelta, not int\n\ntimeutil.py:47: TypeError\n=========================== short test summary info ============================\nFAILED test_timeutil.py::test_offsets - TypeError: timezone() argument 1 must...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.03s\n"
+ },
+ "t06_sql_injection/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.02s\n"
+ },
+ "t07_async_gather/case": {
+  "rc": 0,
+  "tail": ".                                                                        [100%]\n1 passed in 0.21s\n"
+ },
+ "t08_merge_intervals/case": {
+  "rc": 0,
+  "tail": "....                                                                     [100%]\n4 passed in 0.01s\n"
+ },
+ "t09_lru_cache/case": {
+  "rc": 0,
+  "tail": "..                                                                       [100%]\n2 passed in 0.01s\n"
+ },
+ "t10_log_parser/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.01s\n"
+ },
+ "t11_word_wrap/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.01s\n"
+ },
+ "t12_handler_validation/case": {
+  "rc": 0,
+  "tail": "....                                                                     [100%]\n4 passed in 0.01s\n"
+ },
+ "t13_cache_ttl/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n___________________________________ test_ttl ___________________________________\n\n    def test_ttl():\n        clk = Clock(); c = Cache(clock=clk)\n        c.set(\"a\", 1, ttl=10); c.set(\"b\", 2)\n        assert c.get(\"a\") == 1 and len(c) == 2\n        clk.t = 10.5\n        assert c.get(\"a\") is None and c.get(\"a\", \"d\") == \"d\"\n>       assert c.get(\"b\") == 2 and len(c) == 1\n               ^^^^^^^^^^\n\ntest_cache.py:11: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <cache.Cache object at 0x7e6b394b0200>, key = 'b', default = None\n\n    def get(self, key, default=None):\n        entry = self._data.get(key)\n        if entry is None:\n            return default\n>       value, expiry = entry\n        ^^^^^^^^^^^^^\nE       TypeError: cannot unpack non-iterable int object\n\ncache.py:18: TypeError\n=========================== short test summary info ============================\nFAILED test_cache.py::test_ttl - TypeError: cannot unpack non-iterable int ob...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.03s\n"
+ },
+ "t14_cli_flags/case": {
+  "rc": 0,
+  "tail": "...                                                                      [100%]\n3 passed in 0.02s\n"
+ },
+ "t15_dataclass_validation/case": {
+  "rc": 0,
+  "tail": "......                                                                   [100%]\n6 passed in 0.01s\n"
+ },
+ "t16_rename_across_files/case": {
+  "rc": 0,
+  "tail": "..                                                                       [100%]\n2 passed in 0.01s\n"
+ },
+ "t17_signature_change/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n___________________________________ test_fmt ___________________________________\n\n    def test_fmt():\n>       assert format_price(1234.5) == \"$1,234.50\"\nE       AssertionError: assert '$ 1,234.50' == '$1,234.50'\nE         \nE         - $1,234.50\nE         + $ 1,234.50\nE         ?  +\n\ntest_money.py:4: AssertionError\n=========================== short test summary info ============================\nFAILED test_money.py::test_fmt - AssertionError: assert '$ 1,234.50' == '$1,2...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t18_quadratic_dupes/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n_________________________________ test_correct _________________________________\n\n    def test_correct():\n>       assert find_duplicates([3, 1, 3, 2, 1, 3]) == [3, 1]\nE       assert [1, 3] == [3, 1]\nE         \nE         At index 0 diff: 1 != 3\nE         Use -v to get more diff\n\ntest_dupes.py:4: AssertionError\n=========================== short test summary info ============================\nFAILED test_dupes.py::test_correct - assert [1, 3] == [3, 1]\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t19_deep_flatten/case": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n__________________________________ test_order __________________________________\n\n    def test_order():\n>       assert flatten([1, [2, [3, 4]], 5, [], [[6]]]) == [1, 2, 3, 4, 5, 6]\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntest_flat.py:3: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nx = [1, [2, [3, 4]], 5, [], [[6]]]\n\n    def flatten(x):\n        out = []\n        stack = [iter(x)]\n        while stack:\n>           item = next(stack[-1])\n                   ^^^^^^^^^^^^^^^\nE           StopIteration\n\nflat.py:5: StopIteration\n=========================== short test summary info ============================\nFAILED test_flat.py::test_order - StopIteration\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.02s\n"
+ },
+ "t20_write_tests/mut_no_accent_fold": {
+  "rc": 1,
+  "tail": ".F\n=================================== FAILURES ===================================\n_____________ TestSlugify.test_unicode_normalization_and_stripping _____________\n\nself = <test_slugify.TestSlugify object at 0x7fefd66b3890>\n\n    def test_unicode_normalization_and_stripping(self):\n        \"\"\"Test Rule 1: Unicode normalization and accent stripping.\"\"\"\n        # \u00e9 -> e\n>       assert slugify(\"caf\u00e9\") == \"cafe\"\nE       AssertionError: assert 'caf' == 'cafe'\nE         \nE         - cafe\nE         ?    -\nE         + caf\n\ntest_slugify.py:17: AssertionError\n=========================== short test summary info ============================\nFAILED test_slugify.py::TestSlugify::test_unicode_normalization_and_stripping\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 1 passed in 0.05s\n"
+ },
+ "t20_write_tests/mut_no_lower": {
+  "rc": 1,
+  "tail": "F\n=================================== FAILURES ===================================\n______________________ TestSlugify.test_basic_conversion _______________________\n\nself = <test_slugify.TestSlugify object at 0x7bdffada5790>\n\n    def test_basic_conversion(self):\n        \"\"\"Test basic text conversion to slug.\"\"\"\n>       assert slugify(\"Hello World\") == \"hello-world\"\nE       AssertionError: assert 'ello-orld' == 'hello-world'\nE         \nE         - hello-world\nE         ? -     -\nE         + ello-orld\n\ntest_slugify.py:12: AssertionError\n=========================== short test summary info ============================\nFAILED test_slugify.py::TestSlugify::test_basic_conversion - AssertionError: ...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.05s\n"
+ },
+ "t20_write_tests/mut_no_rstrip_after_trunc": {
+  "rc": 1,
+  "tail": "......F\n=================================== FAILURES ===================================\n_________________________ TestSlugify.test_truncation __________________________\n\nself = <test_slugify.TestSlugify object at 0x7127108f9af0>\n\n    def test_truncation(self):\n        \"\"\"Test Rule 5: Truncation to max_len.\"\"\"\n        long_text = \"This is a very long text that should be truncated\"\n        assert len(slugify(long_text, max_len=50)) <= 50\n>       assert slugify(long_text, max_len=50) == \"this-is-a-very-long-text-that-should-be-trunc\"\nE       AssertionError: assert 'this-is-a-ve...-be-truncated' == 'this-is-a-ve...ould-be-trunc'\nE         \nE         Skipping 34 identical leading characters in diff, use -v to show\nE         - ld-be-trunc\nE         + ld-be-truncated\nE         ?            ++++\n\ntest_slugify.py:59: AssertionError\n=========================== short test summary info ============================\nFAILED test_slugify.py::TestSlugify::test_truncation - AssertionError: assert...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 6 passed in 0.06s\n"
+ },
+ "t20_write_tests/mut_no_run_collapse": {
+  "rc": 1,
+  "tail": "....F\n=================================== FAILURES ===================================\n__________________ TestSlugify.test_runs_of_non_alphanumeric ___________________\n\nself = <test_slugify.TestSlugify object at 0x728d77f4e930>\n\n    def test_runs_of_non_alphanumeric(self):\n        \"\"\"Test Rule 3: Runs of non-alphanumeric become single '-'.\"\"\"\n>       assert slugify(\"hello   world\") == \"hello-world\"\nE       AssertionError: assert 'hello---world' == 'hello-world'\nE         \nE         - hello-world\nE         + hello---world\nE         ?       ++\n\ntest_slugify.py:39: AssertionError\n=========================== short test summary info ============================\nFAILED test_slugify.py::TestSlugify::test_runs_of_non_alphanumeric - Assertio...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 4 passed in 0.06s\n"
+ },
+ "t20_write_tests/mut_no_strip": {
+  "rc": 1,
+  "tail": ".....F\n=================================== FAILURES ===================================\n______________ TestSlugify.test_leading_trailing_hyphens_removed _______________\n\nself = <test_slugify.TestSlugify object at 0x709df8ec5fa0>\n\n    def test_leading_trailing_hyphens_removed(self):\n        \"\"\"Test Rule 4: Leading/trailing '-' removed.\"\"\"\n>       assert slugify(\" hello world \") == \"hello-world\"\nE       AssertionError: assert '-hello-world' == 'hello-world'\nE         \nE         - hello-world\nE         + -hello-world\nE         ? +\n\ntest_slugify.py:50: AssertionError\n=========================== short test summary info ============================\nFAILED test_slugify.py::TestSlugify::test_leading_trailing_hyphens_removed - ...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 5 passed in 0.06s\n"
+ },
+ "t20_write_tests/orig": {
+  "rc": 1,
+  "tail": "......F\n=================================== FAILURES ===================================\n_________________________ TestSlugify.test_truncation __________________________\n\nself = <test_slugify.TestSlugify object at 0x7942a1c31af0>\n\n    def test_truncation(self):\n        \"\"\"Test Rule 5: Truncation to max_len.\"\"\"\n        long_text = \"This is a very long text that should be truncated\"\n        assert len(slugify(long_text, max_len=50)) <= 50\n>       assert slugify(long_text, max_len=50) == \"this-is-a-very-long-text-that-should-be-trunc\"\nE       AssertionError: assert 'this-is-a-ve...-be-truncated' == 'this-is-a-ve...ould-be-trunc'\nE         \nE         Skipping 34 identical leading characters in diff, use -v to show\nE         - ld-be-trunc\nE         + ld-be-truncated\nE         ?            ++++\n\ntest_slugify.py:59: AssertionError\n=========================== short test summary info ============================\nFAILED test_slugify.py::TestSlugify::test_truncation - AssertionError: assert...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 6 passed in 0.06s\n"
+ }
+}

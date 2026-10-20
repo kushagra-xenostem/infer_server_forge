@@ -1,0 +1,62 @@
+
+## OS
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+VERSION_CODENAME=noble
+kernel: 6.8.0-142-generic
+
+## Motherboard / BIOS
+Micro-Star International Co., Ltd. B450M PRO-VDH MAX (MS-7A38) | BIOS B.N0 04/08/2025
+
+## CPU / RAM
+CPU(s):                                  4
+Model name:                              AMD Ryzen 3 3200G with Radeon Vega Graphics
+Thread(s) per core:                      1
+CPU(s) scaling MHz:                      67%
+CPU max MHz:                             3600.0000
+MemTotal:       14236456 kB
+SwapTotal:       4194300 kB
+
+## Disks
+NAME    SIZE ROTA MODEL
+sda   931.5G    1 TOSHIBA DT01ABA1
+sdb   223.6G    0 WDC WDS240G2G0B-
+
+## GPUs
+12:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 22 [Radeon RX 6700/6700 XT/6750 XT / 6800M/6850M XT] [1002:73df] (rev df)
+29:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Picasso/Raven 2 [Radeon Vega Series / Radeon Vega Mobile Series] [1002:15d8] (rev c9)
+RX 6700 subsystem vendor: 0x1da2
+PCIe 0000:12:00.0: 16.0 GT/s PCIe x16
+PCIe 0000:11:00.0: 16.0 GT/s PCIe x16
+PCIe 0000:10:00.0: 8.0 GT/s PCIe x8
+PCIe 0000:00:01.1: 8.0 GT/s PCIe x8
+amdgpu module: /lib/modules/6.8.0-142-generic/kernel/drivers/gpu/drm/amd/amdgpu/amdgpu.ko.zst
+linux-firmware 20240318.git3b128b60.0ubuntu3.1
+
+## ROCm (TheRock)
+HIP: 7.14.60850-0000000
+AMD clang version 23.0.0git (https://github.com/ROCm/llvm-project.git 46fcb339fb61119b337f973c7ca9e710a319fdd0+PATCHED:440716f8b87be9d8e20ed910e10e5b6d14d57cf6)
+        MARKET_NAME: AMD Radeon RX 6700
+        TARGET_GRAPHICS_VERSION: gfx1031
+
+## llama.cpp
+version: 0.3.0-dev (build 10660, commit 6c84c7d5d)
+built with GNU 13.3.0 for Linux x86_64
+AMDGPU_TARGETS:UNINITIALIZED=gfx1031
+CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_HIP_COMPILER:STRING=/data/rocm/therock-7.14/install/lib/llvm/bin/clang++
+GGML_HIP:BOOL=ON
+	libhipblas.so.3 => /data/rocm/therock-7.14/install/lib/libhipblas.so.3
+	librocblas.so.5 => /data/rocm/therock-7.14/install/lib/librocblas.so.5
+	libamdhip64.so.7 => /data/rocm/therock-7.14/install/lib/libamdhip64.so.7
+	libhipblaslt.so.1 => /data/rocm/therock-7.14/install/lib/libhipblaslt.so.1
+
+## Models
+mmproj-F16.gguf  899283680 bytes
+Qwen3.6-35B-A3B-UD-IQ4_XS.gguf  17730509792 bytes
+
+## Tooling
+Python 3.12.3
+Docker version 29.1.3, build 29.1.3-0ubuntu3~24.04.2
+tailscale 1.102.3
+cline extension: saoudrizwan.claude-dev-4.1.22
+cline extension: saoudrizwan.claude-dev-4.1.23

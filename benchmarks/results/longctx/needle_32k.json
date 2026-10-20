@@ -1,0 +1,67 @@
+{
+ "target": 30000,
+ "haystack_tokens": 29153,
+ "questions": [
+  {
+   "answer": "4600",
+   "wall_s": 62.3,
+   "prompt_n": 29204,
+   "cached": 0,
+   "prefill_tps": 474.1,
+   "prefill_s": 61.6,
+   "gen_tps": 10.9,
+   "id": "depth10",
+   "expected": "4600",
+   "correct": true
+  },
+  {
+   "answer": "1279",
+   "wall_s": 4.5,
+   "prompt_n": 2048,
+   "cached": 27156,
+   "prefill_tps": 494.0,
+   "prefill_s": 4.1,
+   "gen_tps": 14.4,
+   "id": "depth50",
+   "expected": "1279",
+   "correct": true
+  },
+  {
+   "answer": "2756",
+   "wall_s": 4.4,
+   "prompt_n": 2048,
+   "cached": 27156,
+   "prefill_tps": 502.0,
+   "prefill_s": 4.1,
+   "gen_tps": 15.6,
+   "id": "depth90",
+   "expected": "2756",
+   "correct": true
+  },
+  {
+   "answer": "4617",
+   "wall_s": 4.6,
+   "prompt_n": 2055,
+   "cached": 27156,
+   "prefill_tps": 477.2,
+   "prefill_s": 4.3,
+   "gen_tps": 15.6,
+   "id": "twohop",
+   "expected": "6492",
+   "correct": false
+  },
+  {
+   "answer": "NOT FOUND",
+   "wall_s": 4.6,
+   "prompt_n": 2057,
+   "cached": 27163,
+   "prefill_tps": 471.3,
+   "prefill_s": 4.4,
+   "gen_tps": 14.2,
+   "id": "absent",
+   "expected": "NOT FOUND",
+   "correct": true
+  }
+ ],
+ "accuracy": "4/5"
+}

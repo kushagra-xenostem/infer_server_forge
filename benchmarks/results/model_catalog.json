@@ -1,0 +1,53 @@
+{
+  "_about": "Free/open-weight models considered for a 10 GB VRAM + 13.6 GiB RAM box. params_b = total parameters from Hugging Face safetensors metadata (fetched 2026-10-07). active_b only where the vendor states it. swe_verified = SWE-bench Verified % with its source; vendor numbers use the vendor's own agent scaffold and are not directly comparable to the official standardized runs.",
+  "status_legend": {
+    "tested": "Run and measured on this server (data in benchmarks/results)",
+    "bringup": "Used during GPU/ROCm bring-up with PyTorch/Transformers or llama.cpp smoke tests (no benchmark suite)",
+    "fits": "Fit-analyzed: would run on this box (fully on GPU or via MoE expert offload); not benchmarked",
+    "split_slow": "Dense model larger than VRAM: must split layers GPU/CPU, every weight is read per token -> a few tok/s",
+    "too_large": "Free to download, but needs server-class GPUs or far more RAM than this box has"
+  },
+  "models": [
+    {"name": "Qwen2.5-0.5B-Instruct", "hf": "Qwen/Qwen2.5-0.5B-Instruct", "params_b": 0.5, "type": "dense", "license": "apache-2.0", "released": "2024-09", "status": "bringup", "notes": "PyTorch/Transformers ROCm bring-up"},
+    {"name": "Qwen2.5-1.5B-Instruct", "hf": "Qwen/Qwen2.5-1.5B-Instruct", "params_b": 1.5, "type": "dense", "license": "apache-2.0", "released": "2024-09", "status": "bringup", "notes": "PyTorch/Transformers ROCm bring-up"},
+    {"name": "Qwen2.5-3B-Instruct", "hf": "Qwen/Qwen2.5-3B-Instruct", "params_b": 3.1, "type": "dense", "license": "qwen-research", "released": "2024-09", "status": "tested", "notes": "First llama.cpp HIP model (Q4_K_M): 1978 pp / 97.5 tg tok/s, FA on; kept as health-check model"},
+    {"name": "Qwen2.5-Coder-7B-Instruct", "hf": "Qwen/Qwen2.5-Coder-7B-Instruct", "params_b": 7.6, "type": "dense", "license": "apache-2.0", "released": "2024-09", "status": "tested", "notes": "Baseline: Q4_K_M vs Q8_0, 5 KV-cache configs, KLD/PPL, lm-eval"},
+    {"name": "Qwen3.5-4B", "hf": "Qwen/Qwen3.5-4B", "params_b": 4.7, "type": "dense, hybrid attention", "license": "apache-2.0", "released": "2026-02", "status": "fits", "notes": "Fits fully on GPU with long context"},
+    {"name": "granite-4.2-8b", "hf": "ibm-granite/granite-4.2-8b", "params_b": 8.8, "type": "dense", "license": "apache-2.0", "released": "2026-08", "status": "fits", "notes": "Full attention, large KV cache: weak long-context fit"},
+    {"name": "Qwen3.5-9B", "hf": "Qwen/Qwen3.5-9B", "params_b": 9.7, "type": "dense, hybrid attention", "license": "apache-2.0", "released": "2026-02", "status": "tested", "notes": "Bake-off: HumanEval+ 83.5, MBPP+ 63.8, agent 14/20"},
+    {"name": "Qwen2.5-Coder-14B-Instruct", "hf": "Qwen/Qwen2.5-Coder-14B-Instruct", "params_b": 14.8, "type": "dense", "license": "apache-2.0", "released": "2024-11", "status": "fits", "notes": "4-bit fits VRAM but leaves only ~8-12k context"},
+    {"name": "DeepSeek-Coder-V2-Lite-Instruct", "hf": "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct", "params_b": 15.7, "active_b": 2.4, "type": "MoE (MLA)", "license": "deepseek", "released": "2024-06", "status": "fits", "notes": "Older (2024) coder MoE"},
+    {"name": "gpt-oss-20b", "hf": "openai/gpt-oss-20b", "params_b": 20.9, "active_b": 3.6, "type": "MoE, sliding+full attention", "license": "apache-2.0", "released": "2025-08", "status": "fits", "swe_verified": 34.0, "swe_source": "GLM-4.7-Flash model card comparison", "notes": "Easy fit (MXFP4 11.3 GiB, small KV); weak agentic score"},
+    {"name": "ERNIE-4.5-21B-A3B-Thinking", "hf": "baidu/ERNIE-4.5-21B-A3B-Thinking", "params_b": 21.8, "active_b": 3, "type": "MoE", "license": "apache-2.0", "released": "2025-09", "status": "fits", "notes": "Thinking model; larger KV than Qwen3.6"},
+    {"name": "Devstral-Small-2-24B-Instruct", "hf": "mistralai/Devstral-Small-2-24B-Instruct-2512", "params_b": 24.0, "type": "dense", "license": "apache-2.0", "released": "2025-11", "status": "split_slow", "notes": "Agent-trained coder, but dense 24B does not fit 10 GB VRAM"},
+    {"name": "Gemma-4-26B-A4B-it", "hf": "google/gemma-4-26B-A4B-it", "params_b": 25.8, "active_b": 4, "type": "MoE, sliding+full attention", "license": "apache-2.0", "released": "2026-03", "status": "fits", "swe_verified": 17.4, "swe_source": "Qwen3.6-35B-A3B model card comparison", "notes": "Fits like the 30B; weak agentic score"},
+    {"name": "Qwen3.5-27B", "hf": "Qwen/Qwen3.5-27B", "params_b": 27.8, "type": "dense, hybrid attention", "license": "apache-2.0", "released": "2026-02", "status": "split_slow", "swe_verified": 75.0, "swe_source": "Qwen3.6-35B-A3B model card", "notes": "Strong but dense: too slow when split on this box"},
+    {"name": "Qwen3-Coder-30B-A3B-Instruct", "hf": "Qwen/Qwen3-Coder-30B-A3B-Instruct", "params_b": 30.5, "active_b": 3.3, "type": "MoE, full attention", "license": "apache-2.0", "released": "2025-07", "status": "tested", "swe_verified": 51.6, "swe_source": "Official SWE-bench leaderboard (OpenHands)", "notes": "Bake-off: HumanEval+ 89.6, MBPP+ 74.9, agent 14/20; 32k max on this box"},
+    {"name": "GLM-4.7-Flash", "hf": "zai-org/GLM-4.7-Flash", "params_b": 31.2, "type": "MoE (MLA)", "license": "mit", "released": "2026-01", "status": "fits", "swe_verified": 59.2, "swe_source": "GLM-4.7-Flash model card", "notes": "Candidate for a future bake-off; bigger KV cache"},
+    {"name": "Gemma-4-31B-it", "hf": "google/gemma-4-31B-it", "params_b": 31.3, "type": "dense, sliding+full attention", "license": "apache-2.0", "released": "2026-03", "status": "split_slow", "swe_verified": 52.0, "swe_source": "Qwen3.6-35B-A3B model card comparison", "notes": "Dense 31B"},
+    {"name": "Qwen3.5-35B-A3B", "hf": "Qwen/Qwen3.5-35B-A3B", "params_b": 36.0, "active_b": 3, "type": "MoE, hybrid attention", "license": "apache-2.0", "released": "2026-02", "status": "fits", "swe_verified": 69.2, "swe_source": "Qwen3.5-35B-A3B model card", "notes": "Superseded by Qwen3.6 (same architecture)"},
+    {"name": "Qwen3.6-35B-A3B", "hf": "Qwen/Qwen3.6-35B-A3B", "params_b": 36.0, "active_b": 3, "type": "MoE, hybrid attention (10 full + 30 linear layers)", "license": "apache-2.0", "released": "2026-04", "status": "tested", "swe_verified": 73.4, "swe_source": "Qwen3.6-35B-A3B model card (vendor scaffold, 200K ctx)", "notes": "PRODUCTION: HumanEval+ 87.2, MBPP+ 77.5, agent 18/20, 64k context"},
+    {"name": "Seed-OSS-36B-Instruct", "hf": "ByteDance-Seed/Seed-OSS-36B-Instruct", "params_b": 36.2, "type": "dense", "license": "apache-2.0", "released": "2025-08", "status": "split_slow", "notes": "Dense 36B"},
+    {"name": "Qwen3-Coder-Next", "hf": "Qwen/Qwen3-Coder-Next", "params_b": 79.7, "type": "MoE, hybrid attention (512 experts)", "license": "apache-2.0", "released": "2026-01", "status": "too_large", "notes": "~45 GB at 4-bit"},
+    {"name": "gpt-oss-120b", "hf": "openai/gpt-oss-120b", "params_b": 116.8, "active_b": 5.1, "type": "MoE", "license": "apache-2.0", "released": "2025-08", "status": "too_large", "notes": ""},
+    {"name": "MiniMax-M2.5", "hf": "MiniMaxAI/MiniMax-M2.5", "params_b": 228.7, "type": "MoE", "license": "modified-mit", "released": "2026-02", "status": "too_large", "swe_verified": 75.8, "swe_source": "Official SWE-bench leaderboard (mini-SWE-agent, Feb 2026)", "notes": "Best open model on the official standardized run"},
+    {"name": "Qwen3-Coder-480B-A35B-Instruct", "hf": "Qwen/Qwen3-Coder-480B-A35B-Instruct", "params_b": 480.2, "active_b": 35, "type": "MoE", "license": "apache-2.0", "released": "2025-07", "status": "too_large", "swe_verified": 69.6, "swe_source": "Official SWE-bench leaderboard (OpenHands)", "notes": ""},
+    {"name": "DeepSeek-V3.2", "hf": "deepseek-ai/DeepSeek-V3.2", "params_b": 685.4, "type": "MoE (MLA)", "license": "mit", "released": "2025-12", "status": "too_large", "swe_verified": 70.0, "swe_source": "Official SWE-bench leaderboard (mini-SWE-agent, Feb 2026)", "notes": ""},
+    {"name": "GLM-5", "hf": "zai-org/GLM-5", "params_b": 753.9, "type": "MoE", "license": "mit", "released": "2026-02", "status": "too_large", "swe_verified": 72.8, "swe_source": "Official SWE-bench leaderboard (mini-SWE-agent, Feb 2026)", "notes": ""},
+    {"name": "Kimi-K2.5", "hf": "moonshotai/Kimi-K2.5", "params_b": 1026.9, "type": "MoE", "license": "modified-mit", "released": "2026-01", "status": "too_large", "swe_verified": 70.8, "swe_source": "Official SWE-bench leaderboard (mini-SWE-agent, Feb 2026)", "notes": ""}
+  ],
+  "paid_reference": {
+    "_source": "Official SWE-bench leaderboard data (github.com/SWE-bench/swe-bench.github.io data/leaderboards.json), standardized mini-SWE-agent runs, Feb 2026, 1 attempt",
+    "models": [
+      {"name": "Claude 4.5 Opus (high)", "org": "Anthropic", "swe_verified": 76.8, "usd_per_task": 0.75},
+      {"name": "Claude 4.6 Opus", "org": "Anthropic", "swe_verified": 75.6, "usd_per_task": 0.55},
+      {"name": "Gemini 3 Flash (high)", "org": "Google", "swe_verified": 75.8, "usd_per_task": 0.36},
+      {"name": "GPT-5.2 (high)", "org": "OpenAI", "swe_verified": 72.8, "usd_per_task": 0.47},
+      {"name": "Claude 4.5 Sonnet (high)", "org": "Anthropic", "swe_verified": 71.4, "usd_per_task": 0.66},
+      {"name": "Gemini 3 Pro", "org": "Google", "swe_verified": 69.6, "usd_per_task": 0.96},
+      {"name": "Claude 4.5 Haiku (high)", "org": "Anthropic", "swe_verified": 66.6, "usd_per_task": 0.33},
+      {"name": "GPT-5 mini", "org": "OpenAI", "swe_verified": 56.2, "usd_per_task": 0.05}
+    ],
+    "subscriptions_inr_month": {"ChatGPT Plus": 1999, "Claude Pro": 2000, "GitHub Copilot Pro (approx, USD-billed)": 999}
+  }
+}
