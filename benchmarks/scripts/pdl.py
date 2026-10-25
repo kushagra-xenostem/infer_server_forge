@@ -7,14 +7,13 @@ On completion the SHA-256 is checked against HF's x-linked-etag; mismatch -> fil
 
 Usage: pdl.py <repo> <filename> <dest_dir> [workers=8]
 """
-import concurrent.futures as cf
-import hashlib
 import os
 import sys
-import threading
 import time
-
 import httpx
+import hashlib
+import threading
+import concurrent.futures as cf
 
 CHUNK = 32 << 20
 

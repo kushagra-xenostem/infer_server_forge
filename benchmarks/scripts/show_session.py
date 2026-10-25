@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Print a compact per-turn table from a longctx.py session JSON. Usage: show_session.py <session.json>"""
-import json
 import sys
+import json
 
 for r in json.load(open(sys.argv[1])):
     ctx = (r.get("cached") or 0) + (r.get("prompt_n") or 0)

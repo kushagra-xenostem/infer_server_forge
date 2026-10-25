@@ -6,8 +6,8 @@ solution/ holds reference versions of changed files; validate with
 `agent_tasks.py validate` (original must FAIL hidden tests, reference must PASS).
 """
 import json
-import pathlib
 import shutil
+import pathlib
 import textwrap
 
 ROOT = pathlib.Path(__file__).parent / "suite"

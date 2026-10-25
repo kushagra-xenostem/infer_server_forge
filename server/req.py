@@ -2,8 +2,8 @@
 """One chat request to the local server; prompt on stdin (argv caps at 128 KB).
 Usage: req.py <max_tokens>  -> prints "pp_tps tg_tps n_prompt content_head"
 """
-import json
 import sys
+import json
 import urllib.request
 
 body = {"messages": [{"role": "user", "content": sys.stdin.read()}], "temperature": 0, "max_tokens": int(sys.argv[1])}

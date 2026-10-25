@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Build results/REPORT.md (+ results/report_data.json) from all recorded runs."""
+import re
 import glob
 import json
 import pathlib
-import re
 
 R = pathlib.Path("/data/projects/llm-serving/results")
 PUBLISHED = {"humaneval": 88.4, "humaneval_plus": 84.1, "mbpp": 83.5, "mbpp_plus": 71.7}

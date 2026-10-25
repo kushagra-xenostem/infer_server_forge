@@ -4,12 +4,12 @@
 Usage: record.py <phase> <benchmark> <model_alias> <kv_type> <metrics-json> [notes]
 Server config is read live from llama-server /props so every number is traceable.
 """
-import datetime
-import hashlib
-import json
 import os
-import subprocess
 import sys
+import json
+import hashlib
+import datetime
+import subprocess
 import urllib.request
 
 PROJ = "/data/projects/llm-serving"

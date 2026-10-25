@@ -12,15 +12,14 @@ Model output contract: full contents of each changed file as
 Hidden tests are copied in AFTER model edits, so the model cannot overwrite them.
 All test execution happens inside the no-network sandbox (scripts/sandbox.sh).
 """
-import json
-import pathlib
 import re
-import shutil
-import subprocess
 import sys
+import json
 import time
-
 import httpx
+import shutil
+import pathlib
+import subprocess
 
 PROJ = pathlib.Path("/data/projects/llm-serving")
 SUITE = PROJ / "tasks" / "suite"

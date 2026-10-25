@@ -5,11 +5,10 @@ Usage:  python tools/make_plots.py        (needs matplotlib)
 Writes plots/<name>-light.png and plots/<name>-dark.png (README uses <picture> to pick by theme).
 Palette: dataviz reference palette (validated categorical slots 1-3 + reserved status colors).
 """
+import re
 import json
 import pathlib
-import re
 import textwrap
-
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

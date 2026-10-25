@@ -10,14 +10,13 @@ session <turns> <tokens_per_turn> <out.json>
     Simulated agent session: each turn appends a new code chunk + question to the conversation.
     Measures per-turn prefill (only new tokens, if the cache works), latency and correctness.
 """
-import glob
-import json
-import random
 import re
 import sys
+import glob
+import json
 import time
-
 import httpx
+import random
 
 URL = "http://127.0.0.1:8080"
 SRC = sorted(glob.glob("/data/projects/llama.cpp/src/*.cpp") + glob.glob("/data/projects/llama.cpp/common/*.cpp")

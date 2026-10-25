@@ -13,8 +13,8 @@ Which waiter gets a freed slot is a policy:
   (`hold_max_wait_s`) skips the hold while anyone has waited too long; without it other sessions starve.
 """
 
-import time
 import math
+import time
 import asyncio
 from collections import deque
 from typing import Any, Protocol

@@ -17,8 +17,8 @@ Tokens are approximated as 4 characters, so the load generator builds prompts fr
 Faults are set at construction or at runtime with `POST /mock/faults` (JSON body of `Faults` fields).
 """
 
-import time
 import json
+import time
 import asyncio
 from typing import Any
 from fastapi import FastAPI, Request

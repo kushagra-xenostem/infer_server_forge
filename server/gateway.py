@@ -10,10 +10,9 @@ set in prod_server.sh) apply. Set GW_KEEP_SAMPLING=1 to pass them through instea
 
 Run: .venv/bin/uvicorn --app-dir scripts gateway:app --host 127.0.0.1 --port 8081
 """
-import json
 import os
+import json
 import time
-
 import httpx
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, Response, StreamingResponse

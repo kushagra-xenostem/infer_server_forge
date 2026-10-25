@@ -14,8 +14,8 @@ so they read in simulated seconds. A Retry-After header is real seconds (HTTP al
 so it is slept as is and recorded divided by `time_scale`.
 """
 
-import time
 import json
+import time
 import httpx
 import random
 import asyncio
