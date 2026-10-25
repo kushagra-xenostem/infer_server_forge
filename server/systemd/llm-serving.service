@@ -1,0 +1,24 @@
+# llama-server + gateway as a service (installed by the owner; NOT yet deployed, see docs/16).
+#   sudo cp server/systemd/llm-serving.service server/systemd/llm-watchdog.* /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now llm-serving llm-watchdog.timer
+[Unit]
+Description=llama-server (Qwen3.6-35B-A3B) + FastAPI gateway
+After=network-online.target tailscaled.service
+Wants=network-online.target
+
+[Service]
+Type=forking
+User=<SERVER_USER>
+WorkingDirectory=/data/projects/llm-serving
+# prod_server.sh runs preflight, loads the model, checks VRAM and the 17x23 sanity answer, then starts the gateway
+ExecStart=/data/projects/llm-serving/scripts/prod_server.sh start
+ExecStop=/data/projects/llm-serving/scripts/prod_server.sh stop
+TimeoutStartSec=420
+Restart=on-failure
+RestartSec=30
+# a crash loop must not hammer the GPU: at most 3 starts per 10 minutes
+StartLimitIntervalSec=600
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target

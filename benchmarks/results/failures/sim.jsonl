@@ -1,0 +1,8 @@
+{"time": "2026-10-18T09:10:38", "mode": "sim", "fault": "upstream_drop_mid_stream", "client_saw": {"message": "upstream dropped the stream", "type": "upstream_error", "code": 502}, "detect_s": 1.568, "recover_s": 2.08}
+{"time": "2026-10-18T09:10:46", "mode": "sim", "fault": "upstream_hang", "status": 504, "deadline_s": 8.0, "detect_s": 7.988, "gateway_inflight_after": 0, "upstream_slot_still_busy": true, "recovery": "restart of the upstream (next fault starts on a fresh one)"}
+{"time": "2026-10-18T09:11:19", "mode": "sim", "fault": "cold_start_25s", "client": "honours Retry-After", "first_success_s": 32.22, "requests_sent": 4}
+{"time": "2026-10-18T09:11:46", "mode": "sim", "fault": "cold_start_25s", "client": "retries every 0.2 s", "first_success_s": 27.18, "requests_sent": 117}
+{"time": "2026-10-18T09:12:02", "mode": "sim", "fault": "burst_10_vs_queue_2", "statuses": [429, 429, 429, 429, 429, 429, 429, 504, 504, 504], "retry_after": ["7"], "reject_ms_max": 32.4, "total_s": 8.04}
+{"time": "2026-10-18T09:12:07", "mode": "sim", "fault": "disconnect_storm", "slots_free_after_s": 0.005, "upstream_streams_cancelled": 3}
+{"time": "2026-10-18T09:12:11", "mode": "sim", "fault": "upstream_down", "status": 502, "detect_s": 2.012, "ready_status": 503}
+{"time": "2026-10-18T09:12:13", "mode": "sim", "fault": "upstream_restarted", "first_success_s": 2.115, "attempts": 1}

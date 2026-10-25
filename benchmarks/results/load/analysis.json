@@ -1,0 +1,1184 @@
+{
+  "e_load": [
+    {
+      "config": "no admission",
+      "tag": "e-load-noadm",
+      "dir": "runs-a",
+      "sessions": 1,
+      "ok": 6,
+      "requests": 6,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 5.26,
+        "p95": 18.36,
+        "p99": 18.36
+      },
+      "turn": {
+        "p50": 8.42,
+        "p95": 21.04,
+        "p99": 21.04
+      },
+      "gen_tok_per_s": 2.99,
+      "cached_share": 0.903
+    },
+    {
+      "config": "no admission",
+      "tag": "e-load-noadm",
+      "dir": "runs-a",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 33.36,
+        "p95": 53.12,
+        "p99": 53.12
+      },
+      "turn": {
+        "p50": 40.94,
+        "p95": 58.65,
+        "p99": 58.65
+      },
+      "gen_tok_per_s": 3.35,
+      "cached_share": 0.0
+    },
+    {
+      "config": "no admission",
+      "tag": "e-load-noadm",
+      "dir": "runs-a",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 109.94,
+        "p95": 182.24,
+        "p99": 194.97
+      },
+      "turn": {
+        "p50": 122.38,
+        "p95": 195.88,
+        "p99": 200.4
+      },
+      "gen_tok_per_s": 5.66,
+      "cached_share": 0.0
+    },
+    {
+      "config": "no admission",
+      "tag": "e-load-noadm",
+      "dir": "runs-a",
+      "sessions": 8,
+      "ok": 48,
+      "requests": 48,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 261.77,
+        "p95": 315.78,
+        "p99": 334.24
+      },
+      "turn": {
+        "p50": 279.26,
+        "p95": 333.21,
+        "p99": 370.18
+      },
+      "gen_tok_per_s": 6.88,
+      "cached_share": 0.0
+    },
+    {
+      "config": "queue \u2264 2",
+      "tag": "e-load-q2",
+      "dir": "runs-a",
+      "sessions": 1,
+      "ok": 6,
+      "requests": 6,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 5.26,
+        "p95": 18.27,
+        "p99": 18.27
+      },
+      "turn": {
+        "p50": 8.38,
+        "p95": 21.09,
+        "p99": 21.09
+      },
+      "gen_tok_per_s": 2.99,
+      "cached_share": 0.903
+    },
+    {
+      "config": "queue \u2264 2",
+      "tag": "e-load-q2",
+      "dir": "runs-a",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 33.49,
+        "p95": 53.05,
+        "p99": 53.05
+      },
+      "turn": {
+        "p50": 40.94,
+        "p95": 58.58,
+        "p99": 58.58
+      },
+      "gen_tok_per_s": 3.35,
+      "cached_share": 0.0
+    },
+    {
+      "config": "queue \u2264 2",
+      "tag": "e-load-q2",
+      "dir": "runs-a",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 5,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 62.51,
+        "p95": 168.23,
+        "p99": 172.8
+      },
+      "turn": {
+        "p50": 66.89,
+        "p95": 252.69,
+        "p99": 380.27
+      },
+      "gen_tok_per_s": 5.72,
+      "cached_share": 0.0
+    },
+    {
+      "config": "queue \u2264 2",
+      "tag": "e-load-q2",
+      "dir": "runs-a",
+      "sessions": 8,
+      "ok": 38,
+      "requests": 48,
+      "rejected_429": 67,
+      "gave_up": 10,
+      "ttft": {
+        "p50": 65.6,
+        "p95": 151.42,
+        "p99": 163.87
+      },
+      "turn": {
+        "p50": 142.48,
+        "p95": 336.79,
+        "p99": 370.35
+      },
+      "gen_tok_per_s": 6.46,
+      "cached_share": 0.0
+    }
+  ],
+  "e_load_cline_model": [
+    {
+      "config": "no admission",
+      "tag": "e-load-noadm",
+      "dir": "runs-cline",
+      "sessions": 1,
+      "ok": 6,
+      "requests": 6,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 6.52,
+        "p95": 22.21,
+        "p99": 22.21
+      },
+      "turn": {
+        "p50": 9.56,
+        "p95": 24.9,
+        "p99": 24.9
+      },
+      "gen_tok_per_s": 2.8,
+      "cached_share": 0.903
+    },
+    {
+      "config": "no admission",
+      "tag": "e-load-noadm",
+      "dir": "runs-cline",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 42.91,
+        "p95": 63.46,
+        "p99": 63.46
+      },
+      "turn": {
+        "p50": 49.13,
+        "p95": 68.92,
+        "p99": 68.92
+      },
+      "gen_tok_per_s": 2.89,
+      "cached_share": 0.0
+    },
+    {
+      "config": "no admission",
+      "tag": "e-load-noadm",
+      "dir": "runs-cline",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 133.52,
+        "p95": 206.34,
+        "p99": 219.97
+      },
+      "turn": {
+        "p50": 147.78,
+        "p95": 212.76,
+        "p99": 225.41
+      },
+      "gen_tok_per_s": 5.0,
+      "cached_share": 0.0
+    },
+    {
+      "config": "no admission",
+      "tag": "e-load-noadm",
+      "dir": "runs-cline",
+      "sessions": 8,
+      "ok": 48,
+      "requests": 48,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 295.7,
+        "p95": 352.7,
+        "p99": 377.52
+      },
+      "turn": {
+        "p50": 308.86,
+        "p95": 369.44,
+        "p99": 409.48
+      },
+      "gen_tok_per_s": 6.14,
+      "cached_share": 0.0
+    },
+    {
+      "config": "queue \u2264 2",
+      "tag": "e-load-q2",
+      "dir": "runs-cline",
+      "sessions": 1,
+      "ok": 6,
+      "requests": 6,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 6.54,
+        "p95": 22.19,
+        "p99": 22.19
+      },
+      "turn": {
+        "p50": 9.5,
+        "p95": 24.87,
+        "p99": 24.87
+      },
+      "gen_tok_per_s": 2.8,
+      "cached_share": 0.903
+    },
+    {
+      "config": "queue \u2264 2",
+      "tag": "e-load-q2",
+      "dir": "runs-cline",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 42.97,
+        "p95": 63.59,
+        "p99": 63.59
+      },
+      "turn": {
+        "p50": 49.16,
+        "p95": 68.94,
+        "p99": 68.94
+      },
+      "gen_tok_per_s": 2.89,
+      "cached_share": 0.0
+    },
+    {
+      "config": "queue \u2264 2",
+      "tag": "e-load-q2",
+      "dir": "runs-cline",
+      "sessions": 4,
+      "ok": 23,
+      "requests": 24,
+      "rejected_429": 8,
+      "gave_up": 1,
+      "ttft": {
+        "p50": 73.36,
+        "p95": 158.01,
+        "p99": 165.17
+      },
+      "turn": {
+        "p50": 81.94,
+        "p95": 193.23,
+        "p99": 261.74
+      },
+      "gen_tok_per_s": 5.47,
+      "cached_share": 0.211
+    },
+    {
+      "config": "queue \u2264 2",
+      "tag": "e-load-q2",
+      "dir": "runs-cline",
+      "sessions": 8,
+      "ok": 34,
+      "requests": 48,
+      "rejected_429": 73,
+      "gave_up": 14,
+      "ttft": {
+        "p50": 74.87,
+        "p95": 166.24,
+        "p99": 180.53
+      },
+      "turn": {
+        "p50": 117.61,
+        "p95": 325.78,
+        "p99": 357.88
+      },
+      "gen_tok_per_s": 6.03,
+      "cached_share": 0.0
+    }
+  ],
+  "e_sched": [
+    {
+      "config": "1 slot, fifo, ctx cap 60k",
+      "tag": "e-sched-fifo",
+      "dir": "runs-a",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 33.54,
+        "p95": 53.06,
+        "p99": 53.06
+      },
+      "turn": {
+        "p50": 41.05,
+        "p95": 58.49,
+        "p99": 58.49
+      },
+      "gen_tok_per_s": 3.35,
+      "cached_share": 0.0
+    },
+    {
+      "config": "1 slot, fifo, ctx cap 60k",
+      "tag": "e-sched-fifo",
+      "dir": "runs-a",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 110.05,
+        "p95": 182.31,
+        "p99": 194.97
+      },
+      "turn": {
+        "p50": 122.39,
+        "p95": 195.93,
+        "p99": 200.45
+      },
+      "gen_tok_per_s": 5.66,
+      "cached_share": 0.0
+    },
+    {
+      "config": "1 slot, affinity, ctx cap 60k",
+      "tag": "e-sched-affinity",
+      "dir": "runs-a",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 33.43,
+        "p95": 53.18,
+        "p99": 53.18
+      },
+      "turn": {
+        "p50": 41.04,
+        "p95": 58.64,
+        "p99": 58.64
+      },
+      "gen_tok_per_s": 3.35,
+      "cached_share": 0.0
+    },
+    {
+      "config": "1 slot, affinity, ctx cap 60k",
+      "tag": "e-sched-affinity",
+      "dir": "runs-a",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 109.97,
+        "p95": 182.38,
+        "p99": 195.04
+      },
+      "turn": {
+        "p50": 122.3,
+        "p95": 195.89,
+        "p99": 200.55
+      },
+      "gen_tok_per_s": 5.66,
+      "cached_share": 0.0
+    },
+    {
+      "config": "1 slot, fifo, hold 5 s, no fairness guard, ctx cap 60k",
+      "tag": "e-sched-hold5",
+      "dir": "runs-b",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 39.73,
+        "p95": 57.79,
+        "p99": 57.79
+      },
+      "turn": {
+        "p50": 49.75,
+        "p95": 60.47,
+        "p99": 60.47
+      },
+      "gen_tok_per_s": 3.24,
+      "cached_share": 0.204
+    },
+    {
+      "config": "1 slot, fifo, hold 5 s, no fairness guard, ctx cap 60k",
+      "tag": "e-sched-hold5",
+      "dir": "runs-b",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 121.16,
+        "p95": 218.47,
+        "p99": 227.74
+      },
+      "turn": {
+        "p50": 124.95,
+        "p95": 221.63,
+        "p99": 235.54
+      },
+      "gen_tok_per_s": 5.36,
+      "cached_share": 0.115
+    },
+    {
+      "config": "1 slot, fifo, hold 15 s, no fairness guard, ctx cap 60k",
+      "tag": "e-sched-hold15",
+      "dir": "runs-b",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 2.59,
+        "p95": 158.76,
+        "p99": 158.76
+      },
+      "turn": {
+        "p50": 9.93,
+        "p95": 161.6,
+        "p99": 161.6
+      },
+      "gen_tok_per_s": 4.15,
+      "cached_share": 0.904
+    },
+    {
+      "config": "1 slot, fifo, hold 15 s, no fairness guard, ctx cap 60k",
+      "tag": "e-sched-hold15",
+      "dir": "runs-b",
+      "sessions": 4,
+      "ok": 23,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 5.37,
+        "p95": 273.67,
+        "p99": 304.73
+      },
+      "turn": {
+        "p50": 18.67,
+        "p95": 276.4,
+        "p99": 307.1
+      },
+      "gen_tok_per_s": 5.92,
+      "cached_share": 0.625
+    },
+    {
+      "config": "1 slot, fifo, hold 25 s, no fairness guard, ctx cap 60k",
+      "tag": "e-sched-hold25",
+      "dir": "runs-b",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 2.51,
+        "p95": 168.68,
+        "p99": 168.68
+      },
+      "turn": {
+        "p50": 9.97,
+        "p95": 171.42,
+        "p99": 171.42
+      },
+      "gen_tok_per_s": 4.0,
+      "cached_share": 0.904
+    },
+    {
+      "config": "1 slot, fifo, hold 25 s, no fairness guard, ctx cap 60k",
+      "tag": "e-sched-hold25",
+      "dir": "runs-b",
+      "sessions": 4,
+      "ok": 21,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 2.2,
+        "p95": 104.28,
+        "p99": 167.97
+      },
+      "turn": {
+        "p50": 11.86,
+        "p95": 114.08,
+        "p99": 175.55
+      },
+      "gen_tok_per_s": 6.6,
+      "cached_share": 0.811
+    },
+    {
+      "config": "1 slot, fifo, hold 15 s, guard 60 s, ctx cap 60k",
+      "tag": "e-sched-hold15-guard",
+      "dir": "runs-c",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 5.39,
+        "p95": 93.03,
+        "p99": 93.03
+      },
+      "turn": {
+        "p50": 11.97,
+        "p95": 95.73,
+        "p99": 95.73
+      },
+      "gen_tok_per_s": 3.83,
+      "cached_share": 0.703
+    },
+    {
+      "config": "1 slot, fifo, hold 15 s, guard 60 s, ctx cap 60k",
+      "tag": "e-sched-hold15-guard",
+      "dir": "runs-c",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 106.19,
+        "p95": 198.17,
+        "p99": 202.06
+      },
+      "turn": {
+        "p50": 109.07,
+        "p95": 205.74,
+        "p99": 209.77
+      },
+      "gen_tok_per_s": 5.89,
+      "cached_share": 0.129
+    },
+    {
+      "config": "1 slot, fifo, hold 25 s, guard 60 s, ctx cap 60k",
+      "tag": "e-sched-hold25-guard",
+      "dir": "runs-c",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 5.35,
+        "p95": 97.85,
+        "p99": 97.85
+      },
+      "turn": {
+        "p50": 11.84,
+        "p95": 100.53,
+        "p99": 100.53
+      },
+      "gen_tok_per_s": 3.71,
+      "cached_share": 0.703
+    },
+    {
+      "config": "1 slot, fifo, hold 25 s, guard 60 s, ctx cap 60k",
+      "tag": "e-sched-hold25-guard",
+      "dir": "runs-c",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 106.19,
+        "p95": 198.36,
+        "p99": 202.2
+      },
+      "turn": {
+        "p50": 108.98,
+        "p95": 205.99,
+        "p99": 210.01
+      },
+      "gen_tok_per_s": 5.89,
+      "cached_share": 0.129
+    }
+  ],
+  "e_np2": [
+    {
+      "config": "1 slot, fifo, ctx cap 30k",
+      "tag": "e-np2-np1ctx30k",
+      "dir": "runs-b",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 33.44,
+        "p95": 53.06,
+        "p99": 53.06
+      },
+      "turn": {
+        "p50": 40.98,
+        "p95": 58.52,
+        "p99": 58.52
+      },
+      "gen_tok_per_s": 3.35,
+      "cached_share": 0.0
+    },
+    {
+      "config": "1 slot, fifo, ctx cap 30k",
+      "tag": "e-np2-np1ctx30k",
+      "dir": "runs-b",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 102.35,
+        "p95": 176.19,
+        "p99": 178.51
+      },
+      "turn": {
+        "p50": 119.8,
+        "p95": 178.54,
+        "p99": 195.89
+      },
+      "gen_tok_per_s": 5.28,
+      "cached_share": 0.0
+    },
+    {
+      "config": "2 slots, beta 0.3, fifo, ctx cap 30k",
+      "tag": "e-np2-beta0.3",
+      "dir": "runs-b",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 5.88,
+        "p95": 29.28,
+        "p99": 29.28
+      },
+      "turn": {
+        "p50": 13.09,
+        "p95": 32.75,
+        "p99": 32.75
+      },
+      "gen_tok_per_s": 6.46,
+      "cached_share": 0.904
+    },
+    {
+      "config": "2 slots, beta 0.3, fifo, ctx cap 30k",
+      "tag": "e-np2-beta0.3",
+      "dir": "runs-b",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 61.09,
+        "p95": 94.94,
+        "p99": 96.12
+      },
+      "turn": {
+        "p50": 78.17,
+        "p95": 114.92,
+        "p99": 447.01
+      },
+      "gen_tok_per_s": 6.14,
+      "cached_share": 0.164
+    },
+    {
+      "config": "2 slots, beta 0.6, fifo, ctx cap 30k",
+      "tag": "e-np2-beta0.6",
+      "dir": "runs-b",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 5.83,
+        "p95": 29.41,
+        "p99": 29.41
+      },
+      "turn": {
+        "p50": 14.24,
+        "p95": 33.51,
+        "p99": 33.51
+      },
+      "gen_tok_per_s": 6.32,
+      "cached_share": 0.904
+    },
+    {
+      "config": "2 slots, beta 0.6, fifo, ctx cap 30k",
+      "tag": "e-np2-beta0.6",
+      "dir": "runs-b",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 63.39,
+        "p95": 99.39,
+        "p99": 100.04
+      },
+      "turn": {
+        "p50": 83.4,
+        "p95": 120.02,
+        "p99": 473.97
+      },
+      "gen_tok_per_s": 5.85,
+      "cached_share": 0.164
+    },
+    {
+      "config": "2 slots, beta 1.0, fifo, ctx cap 30k",
+      "tag": "e-np2-beta1.0",
+      "dir": "runs-b",
+      "sessions": 2,
+      "ok": 12,
+      "requests": 12,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 6.02,
+        "p95": 29.41,
+        "p99": 29.41
+      },
+      "turn": {
+        "p50": 15.9,
+        "p95": 34.42,
+        "p99": 34.42
+      },
+      "gen_tok_per_s": 6.17,
+      "cached_share": 0.904
+    },
+    {
+      "config": "2 slots, beta 1.0, fifo, ctx cap 30k",
+      "tag": "e-np2-beta1.0",
+      "dir": "runs-b",
+      "sessions": 4,
+      "ok": 24,
+      "requests": 24,
+      "rejected_429": 0,
+      "gave_up": 0,
+      "ttft": {
+        "p50": 67.99,
+        "p95": 103.97,
+        "p99": 106.63
+      },
+      "turn": {
+        "p50": 90.12,
+        "p95": 126.56,
+        "p99": 509.3
+      },
+      "gen_tok_per_s": 5.51,
+      "cached_share": 0.164
+    }
+  ],
+  "robustness": [
+    {
+      "config": "1 slot, FIFO",
+      "sessions": 2,
+      "seeds": 3,
+      "failed": 0,
+      "ttft50": {
+        "mean": 32.36,
+        "min": 26.39,
+        "max": 37.14
+      },
+      "ttft95": {
+        "mean": 68.28,
+        "min": 39.33,
+        "max": 112.46
+      },
+      "turn50": {
+        "mean": 50.09,
+        "min": 33.3,
+        "max": 75.93
+      },
+      "turn95": {
+        "mean": 74.6,
+        "min": 43.09,
+        "max": 122.22
+      },
+      "cached": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      }
+    },
+    {
+      "config": "1 slot, FIFO",
+      "sessions": 4,
+      "seeds": 3,
+      "failed": 0,
+      "ttft50": {
+        "mean": 102.49,
+        "min": 72.52,
+        "max": 124.9
+      },
+      "ttft95": {
+        "mean": 179.93,
+        "min": 150.02,
+        "max": 207.47
+      },
+      "turn50": {
+        "mean": 113.59,
+        "min": 83.29,
+        "max": 135.1
+      },
+      "turn95": {
+        "mean": 190.44,
+        "min": 156.5,
+        "max": 218.88
+      },
+      "cached": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      }
+    },
+    {
+      "config": "1 slot, hold 15 s + guard",
+      "sessions": 2,
+      "seeds": 3,
+      "failed": 0,
+      "ttft50": {
+        "mean": 23.27,
+        "min": 5.0,
+        "max": 59.42
+      },
+      "ttft95": {
+        "mean": 110.9,
+        "min": 88.71,
+        "max": 150.95
+      },
+      "turn50": {
+        "mean": 39.38,
+        "min": 11.97,
+        "max": 89.11
+      },
+      "turn95": {
+        "mean": 117.07,
+        "min": 95.73,
+        "max": 159.28
+      },
+      "cached": {
+        "mean": 0.61,
+        "min": 0.475,
+        "max": 0.703
+      }
+    },
+    {
+      "config": "1 slot, hold 15 s + guard",
+      "sessions": 4,
+      "seeds": 3,
+      "failed": 0,
+      "ttft50": {
+        "mean": 103.53,
+        "min": 83.22,
+        "max": 121.17
+      },
+      "ttft95": {
+        "mean": 195.64,
+        "min": 190.44,
+        "max": 198.31
+      },
+      "turn50": {
+        "mean": 111.23,
+        "min": 86.61,
+        "max": 138.01
+      },
+      "turn95": {
+        "mean": 221.16,
+        "min": 195.91,
+        "max": 261.83
+      },
+      "cached": {
+        "mean": 0.19,
+        "min": 0.129,
+        "max": 0.296
+      }
+    },
+    {
+      "config": "2 slots (beta 0.6)",
+      "sessions": 2,
+      "seeds": 3,
+      "failed": 0,
+      "ttft50": {
+        "mean": 3.0,
+        "min": 1.42,
+        "max": 5.83
+      },
+      "ttft95": {
+        "mean": 26.93,
+        "min": 24.18,
+        "max": 29.41
+      },
+      "turn50": {
+        "mean": 15.97,
+        "min": 10.31,
+        "max": 23.35
+      },
+      "turn95": {
+        "mean": 57.69,
+        "min": 32.61,
+        "max": 106.95
+      },
+      "cached": {
+        "mean": 0.93,
+        "min": 0.904,
+        "max": 0.948
+      }
+    },
+    {
+      "config": "2 slots (beta 0.6)",
+      "sessions": 4,
+      "seeds": 3,
+      "failed": 0,
+      "ttft50": {
+        "mean": 55.32,
+        "min": 49.51,
+        "max": 63.39
+      },
+      "ttft95": {
+        "mean": 108.63,
+        "min": 82.94,
+        "max": 143.55
+      },
+      "turn50": {
+        "mean": 78.07,
+        "min": 66.29,
+        "max": 84.53
+      },
+      "turn95": {
+        "mean": 186.14,
+        "min": 120.02,
+        "max": 304.04
+      },
+      "cached": {
+        "mean": 0.09,
+        "min": 0.0,
+        "max": 0.164
+      }
+    }
+  ],
+  "live": [
+    {
+      "sessions": 1,
+      "summary": {
+        "command": "load",
+        "tag": "live-small",
+        "sessions": 1,
+        "workload": "agent",
+        "turns": 4,
+        "max_gen": 300,
+        "seed": 0,
+        "stamp": "20261018-070713",
+        "requests": 4,
+        "ok": 4,
+        "rejected_429": 0,
+        "gave_up": 0,
+        "errors": 0,
+        "ttft_s": {
+          "p50": 3.54,
+          "p95": 20.18,
+          "p99": 20.18
+        },
+        "e2e_s": {
+          "p50": 11.59,
+          "p95": 39.96,
+          "p99": 39.96
+        },
+        "turn_s": {
+          "p50": 11.59,
+          "p95": 39.96,
+          "p99": 39.96
+        },
+        "wall_s": 86.3,
+        "req_per_min": 2.78,
+        "gen_tok_per_s": 7.38
+      },
+      "cached_share": 0.91,
+      "retry_after": []
+    },
+    {
+      "sessions": 2,
+      "summary": {
+        "command": "load",
+        "tag": "live-small",
+        "sessions": 2,
+        "workload": "agent",
+        "turns": 4,
+        "max_gen": 300,
+        "seed": 0,
+        "stamp": "20261018-070713",
+        "requests": 8,
+        "ok": 8,
+        "rejected_429": 0,
+        "gave_up": 0,
+        "errors": 0,
+        "ttft_s": {
+          "p50": 19.81,
+          "p95": 25.57,
+          "p99": 25.57
+        },
+        "e2e_s": {
+          "p50": 28.63,
+          "p95": 37.51,
+          "p99": 37.51
+        },
+        "turn_s": {
+          "p50": 28.63,
+          "p95": 37.51,
+          "p99": 37.51
+        },
+        "wall_s": 137.2,
+        "req_per_min": 3.5,
+        "gen_tok_per_s": 7.36
+      },
+      "cached_share": 0.0,
+      "retry_after": []
+    },
+    {
+      "sessions": 4,
+      "summary": {
+        "command": "load",
+        "tag": "live-small",
+        "sessions": 4,
+        "workload": "agent",
+        "turns": 4,
+        "max_gen": 300,
+        "seed": 0,
+        "stamp": "20261018-070713",
+        "requests": 16,
+        "ok": 16,
+        "rejected_429": 8,
+        "gave_up": 0,
+        "errors": 0,
+        "ttft_s": {
+          "p50": 35.39,
+          "p95": 53.0,
+          "p99": 53.0
+        },
+        "e2e_s": {
+          "p50": 40.07,
+          "p95": 57.89,
+          "p99": 57.89
+        },
+        "turn_s": {
+          "p50": 46.79,
+          "p95": 107.99,
+          "p99": 107.99
+        },
+        "wall_s": 281.4,
+        "req_per_min": 3.41,
+        "gen_tok_per_s": 5.71
+      },
+      "cached_share": 0.0,
+      "retry_after": [
+        20.0
+      ]
+    }
+  ],
+  "validation": {
+    "first_request": {
+      "new": 4488,
+      "prefill_s": 19.252,
+      "model_s": 8.77
+    },
+    "cold_prefill_cline_model_on_test": {
+      "n": 16,
+      "median_rel_err": 0.259,
+      "max_abs_rel_err": 0.421
+    },
+    "cold_prefill_live_fit": {
+      "overhead_s": 0.733,
+      "prefill_tps": 699.7,
+      "train_n": 8,
+      "test": {
+        "n": 16,
+        "median_rel_err": 0.029,
+        "max_abs_rel_err": 0.171
+      }
+    },
+    "warm_prefill_cline_model": {
+      "n": 3,
+      "median_rel_err": -0.316,
+      "max_abs_rel_err": 0.367
+    },
+    "decode_cline_model": {
+      "n": 28,
+      "median_rel_err": 0.015,
+      "max_abs_rel_err": 0.121
+    }
+  }
+}

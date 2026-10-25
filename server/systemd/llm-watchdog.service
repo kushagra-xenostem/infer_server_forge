@@ -1,0 +1,7 @@
+[Unit]
+Description=Health watchdog for llm-serving (restarts a hung server)
+
+[Service]
+Type=oneshot
+User=<SERVER_USER>
+ExecStart=/data/projects/llm-serving/scripts/watchdog.sh
